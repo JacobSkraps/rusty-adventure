@@ -22,14 +22,7 @@ wallList = [];
 
 enemyList = [];
 
-snakeListTop = [];
-snakeListLeft = [];
-
-birdListTop = [];
-birdListLeft = [];
-
-bonusListTop = [];
-bonusListLeft = [];
+bonusList = [];
 
 //* Wall/snake location storers
 
@@ -77,17 +70,24 @@ function moveDir(motionDir){
             return;
         }
     } 
-    // for(let i = 0; i < wallList.length; i++){
-    //     if (newLeft <= snakeListLeft + 150 & newTop == snakeListTop){
-    //             console.log("Snakebite");
-    //     } 
-    // }
-    //     for(let i = 0; i < wallList.length; i++){
-    //         if (newLeft == bonusListLeft[i] & newTop == bonusListTop[i]){
-    //         console.log("I found a bonus!");
+    for(let i = 0; i < enemyList.length; i++){
+        if (enemyList[i].type == "bird"){
+            if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
+                    console.log("bird spots you");
+            } 
+        }
+        if (enemyList[i].type == "snake"){
+            if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
+                    console.log("Snakebite");
+            } 
+        }
+    }
+        for(let i = 0; i < bonusList.length; i++){
+            if (newLeft == bonusList[i].left & newTop == bonusList[i].top){
+            console.log(`I found a ${bonusList[i].type}!`);
             
-    //     }
-    // }
+        }
+    }
         
         if(newLeft>0 && newLeft<playSpace.clientWidth - (heroPos.width)){
             heroLeft = newLeft;
@@ -118,84 +118,6 @@ function moveDir(motionDir){
     
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
     //Put timeout on movement
-}
-
-class Enemy{
-    constructor(creatureName, viewDistance){
-        this.creatureName = creatureName;
-        this.viewDistance = viewDistance;
-    }
-    spotHero(){
-        if (hero.pos.width >= this.pos+viewDistance && hero.pos.width <= this.pos-viewDistance){
-            console.log("hero spotted");
-        }
-    }
-}
-class Eel extends Enemy{
-    constructor(creatureName, sizeX, viewDistance){
-        super(creatureName, viewDistance);
-        this.sizeX = sizeX;
-    }
-    seeHero(){
-        //* If you see the hero, move your entire body
-        if (hero.pos.width <= this.pos+this.viewDistance){
-            //interval to move
-            moveDir({hs:this.sizeX, vs:0});
-        }
-        if (hero.pos.width >= this.pos-this.viewDistance){
-            //interval to move
-            moveDir({hs:-this.sizeX, vs:0});
-        }
-    }
-}
-class Bird extends Enemy{
-    constructor(creatureName,viewDistance){
-        super(creatureName,viewDistance);
-    }
-    seeHero(){
-        //* Bind to a interval and don't stop until reach wall
-        if (hero.pos.width <= this.pos+this.viewDistance){
-            moveDir({hs:1, vs:0});
-        }
-        if (hero.pos.width >= this.pos-this.viewDistance){
-            moveDir({hs:1, vs:0});
-        }
-    }
-}
-
-class Interactables {
-    constructor(obstacleName, startPos, tangable){
-        this.obstacleName = obstacleName;
-        this.startPos = startPos;
-        this.tangable = tangable;
-    }
-};
-class Shell extends Interactables{
-    constructor(obstacleName, tangable, hide){
-        super(obstacleName, tangable);
-        this.hiding = hiding
-    }
-    hideCrab(){
-        if(hero.hiding==true){
-            hero.style.opacity = 0;
-            let shell = document.querySelector(`#${this.obstacleName}`);
-            shell.style.scale = 1.2;
-        }
-        else{
-            hero = document.querySelector("#hero")
-            hero.style.opacity = 1;
-            let shell = document.querySelector(`#${this.obstacleName}`);
-            shell.style.scale = 1.2;
-        }
-    }
-};
-class Bonus extends Interactables{
-    constructor(obstacleName, tangable, collected, collectableType){
-        super(obstacleName, tangable);
-        this.collectableType = collectableType
-        this.collected = collected
-        //* Put a little bow in the top left when bow is collected
-    }
 }
 
 class WallSpawn{
@@ -314,31 +236,6 @@ class enemySpawn{
 
 let snakeOner = new enemySpawn("stats.json", document.querySelector("#playSpace"));
 
-//* Bow Collection doesn't work
-// class bow{
-//     constructor(dataSource, spawnArea){
-//         fetch(dataSource, spawnArea)
-//         .then(response => response.json())
-//         .then(stats => {
-//             this.bowList = stats.levelInformation.levelOne.bonus.collectableOne;
-//             let beLife = document.createElement("div");
-//             beLife.classList.add("bow");
-
-//             // console.log(beLife);
-
-//             let bowTop = stats.levelInformation.levelOne.bonus.collectableOne.startPos.split(", ")[1];
-//             let bowLeft = stats.levelInformation.levelOne.bonus.collectableOne.startPos.split(", ")[2];
-            
-//             console.log(`Bow y: ${bowTop} x: ${bowLeft}`)
-//             gsap.to(beLife, {top: bowTop, left:bowLeft, duration:0});
-
-//             spawnArea.appendChild(beLife);
-            
-//         })
-//         .catch(err =>console.log(err));
-
-//     }
-// }
 
 class collectableAdd{
     constructor(dataSource, spawnArea){
@@ -349,16 +246,21 @@ class collectableAdd{
             console.log(bonusShortcut);
             for (let i = 0; i < bonusShortcut.length; i++){
                 let beLife = document.createElement("div");
+                let bonusType = bonusShortcut[i].collectableType
+                beLife.classList.add(bonusType);
+            
+                let bonusTop = bonusShortcut[i].startPos[0];
+                let bonusLeft = bonusShortcut[i].startPos[1];
 
-                if(bonusShortcut[i].collectableType=="bow"){
-                    beLife.classList.add("bow");
-                    let bonusTop = bonusShortcut[i].startPos[0];
-                    let bonusLeft = bonusShortcut[i].startPos[1];
-                    bonusListTop.push(bonusTop);
-                    bonusListLeft.push(bonusLeft);
-                    console.log(`bonus y: ${bonusTop} x: ${bonusLeft}`)
-                    gsap.to(beLife, {top: bonusTop, left:bonusLeft, duration:0});
+                console.log(`bonus y: ${bonusTop} x: ${bonusLeft}`)
+                gsap.to(beLife, {top: bonusTop, left:bonusLeft, duration:0});
+
+                let bonusExample = {
+                    type: bonusType,
+                    top: bonusTop,
+                    left: bonusLeft,
                 }
+                bonusList.push(bonusExample);
                 
                 spawnArea.appendChild(beLife);
             };
@@ -371,9 +273,3 @@ class collectableAdd{
 let bowr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
 
 //* Rock movement (Check if space beyond rock is available is not no move rock)
-// class Rock extends Obstacle{
-//     constructor(obstacleName, tangable, pushable){
-//         super(obstacleName, tangable);
-//         this.pushable = pushable
-//     }
-// };
