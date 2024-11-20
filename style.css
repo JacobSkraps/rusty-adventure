@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+.mallanna-regular {
+    font-family: "Mallanna", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+header, #instructions{
+    text-align: center;
+}
+header>h1{
+    font-weight: 800;
+    font-size: 3em;
+    display: inline-block;
+    margin: 5px auto 10px;
+}
+main{
+    width: 100vw;
+    height: 90vh;
+    position: relative;
+}
+#playSpace{
+    background-color:aquamarine;
+    width: 550px;
+    height: 500px;
+    border: 1px solid black;
+    margin: 0 auto;
+    position: relative;
+}
+/* #playSpace div{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: black;
+} */
+#hero{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: blue;
+}
+.creature{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: black;
+}
+
+
+.oneLong{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: brown;
+}
+.twoLong{
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    background-color: rgb(124, 29, 29);
+}
+.snake{
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    background-color: red; 
+}
+.bow{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: pink; 
+}
+
+#instructions>p{
+    font-size: 2em;
+    color: blue;
+}

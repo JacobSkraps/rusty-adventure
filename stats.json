@@ -1,0 +1,140 @@
+{
+    "heroStats" : {
+        "hitPoints": 1,
+        "graphic": "./images/crab.svg",
+        "abilities": ["hide", "push"]
+    },
+
+    "enemyStats" : {
+        "birdStats" : {
+            "hitPoints": 3,
+            "graphic": "./images/seagull.svg",
+            "movespeed": 2,
+            "viewDistance": 8
+        },
+        "eelStats" : {
+            "hitPoints": "3",
+            "graphic": "./images/eel.svg",
+            "movespeed" : 4,
+            "viewDistance": 3
+        },
+        "turtleStats" : {
+            "hitPoints": "3",
+            "graphic": "./images/turtle.svg",
+            "movespeed" : 1,
+            "viewDistance": 0
+        }
+    },
+
+    "levelInformation" : {
+        "levelOne" : {
+            "Enemies" : [
+                {
+                    "type": "bird",
+                    "startPos": [300, 100],
+                    "viewDistance": 400
+                },
+                {
+                    "type": "snake",
+                    "startPos": [150, 0],
+                    "viewDistance": 150
+                }
+                
+            ],
+            "Walls": [
+                {
+                    "obstacleName": "wall",
+                    "startPos": [100, 250],
+                    "wallType": "twoLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [50, 100],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [50, 200],
+                    "wallType": "oneLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 400],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [100, 300],
+                    "wallType": "oneLong"
+                },
+                
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 100],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 200],
+                    "wallType": "twoLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 150],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 250],
+                    "wallType": "oneLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 150],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 250],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 350],
+                    "wallType": "oneoLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 300],
+                    "wallType": "twoLong"
+                }
+            ],
+            "Interactables": {
+                "shellOne": {
+                    "startPos": "300, 200",
+                    "hiding": "hideable",
+                    "tangeable": false
+
+                },
+                "rockOne": {
+                    "startPos": "250, 300",
+                    "pushable": "pushable",
+                    "tangeable": true
+
+                }
+            },
+            "bonus": [
+                {
+                    "collectableType": "bow",
+                    "collected": false,
+                    "startPos": [100, 150]
+                }
+            ]
+        }
+    }
+}
