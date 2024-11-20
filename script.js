@@ -17,8 +17,8 @@ let heroLeft = 400;
 hero.style.top = `${heroTop}px`;
 hero.style.left = `${heroLeft}px`;
 
-wallListTop = [];
-wallListLeft = [];
+
+wallList = [];
 
 enemyList = [];
 
@@ -67,50 +67,55 @@ function moveDir(motionDir){
     newLeft = heroLeft + (speed*motionDir.hs);
     newTop =  heroTop + (speed*motionDir.vs);
     let playBonk = false;
-    for(let i = 0; i < wallListTop.length; i++){
-        if(newLeft == wallListLeft[i] & newTop == wallListTop[i]){
+    for(let i = 0; i < wallList.length; i++){
+        if(newLeft == wallList[i].left & newTop == wallList[i].top){
             console.log("wall");
             playBonk = true;
             console.log(`I am at ${heroTop} and ${heroLeft}`)
             heroLeft = prevLeft;
             heroTop = prevTop;
             return;
-        } else if (newLeft <= snakeListLeft + 150 & newTop == snakeListTop){
-            console.log("Snakebite");
-            // gsap.to(snake, {left:snakeLeft+150, duration:.2});
-        } else if (newLeft == bonusListLeft[i] & newTop == bonusListTop[i]){
-            console.log("I found a bonus!");
+        }
+    } 
+    // for(let i = 0; i < wallList.length; i++){
+    //     if (newLeft <= snakeListLeft + 150 & newTop == snakeListTop){
+    //             console.log("Snakebite");
+    //     } 
+    // }
+    //     for(let i = 0; i < wallList.length; i++){
+    //         if (newLeft == bonusListLeft[i] & newTop == bonusListTop[i]){
+    //         console.log("I found a bonus!");
             
+    //     }
+    // }
+        
+        if(newLeft>0 && newLeft<playSpace.clientWidth - (heroPos.width)){
+            heroLeft = newLeft;
+        }else if(newLeft<=0){
+            heroLeft = 0;
+            playBonk = true;
+        }else{
+            heroLeft = playSpace.clientWidth-heroPos.width;
+            playBonk = true;
         }
-        else{
-            if(newLeft>0 && newLeft<playSpace.clientWidth - (heroPos.width)){
-                heroLeft = newLeft;
-            }else if(newLeft<=0){
-                heroLeft = 0;
-                playBonk = true;
-            }else{
-                heroLeft = playSpace.clientWidth-heroPos.width;
-                playBonk = true;
-            }
-            if(newTop>0 && newTop<playSpace.clientHeight - (heroPos.width/2)){
-                heroTop = newTop;
-            }else if(newTop<=0){
-                heroTop = 0;
-                playBonk = true;
-            }else{
-                heroTop = playSpace.clientHeight-heroPos.height;
-                playBonk = true;
-            }
-            if(playBonk==true){
-                bonkers.currentTime = 0;
-                bonkers.play();
-            }else{
-                footsteps.currentTime = 0;
-                footsteps.play();
-            }
-            console.log(`I am at ${heroTop} and ${heroLeft}`)
+        if(newTop>0 && newTop<playSpace.clientHeight - (heroPos.width/2)){
+            heroTop = newTop;
+        }else if(newTop<=0){
+            heroTop = 0;
+            playBonk = true;
+        }else{
+            heroTop = playSpace.clientHeight-heroPos.height;
+            playBonk = true;
         }
-    }
+        if(playBonk==true){
+            bonkers.currentTime = 0;
+            bonkers.play();
+        }else{
+            footsteps.currentTime = 0;
+            footsteps.play();
+        }
+        console.log(`I am at ${heroTop} and ${heroLeft}`)
+    
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
     //Put timeout on movement
 }
@@ -209,21 +214,31 @@ class WallSpawn{
                     beLife.classList.add("oneLong");
                     let wallTop = wallShortcut[i].startPos[0];
                     let wallLeft = wallShortcut[i].startPos[1];
-                    wallListTop.push(wallTop);
-                    wallListLeft.push(wallLeft);
                     console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
                     gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
+                    let wallExample = {
+                        top: wallTop,
+                        left: wallLeft,
+                    }
+                    wallList.push(wallExample);
+
                 }
                 else{
                     beLife.classList.add("twoLong");
                     let wallTop = wallShortcut[i].startPos[0];
                     let wallLeft = wallShortcut[i].startPos[1];
-                    wallListTop.push(wallTop);
-                    wallListLeft.push(wallLeft);
-                    wallListTop.push(wallTop);
-                    wallListLeft.push(wallLeft+50);
                     console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
                     gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
+                    let wallExample = {
+                        top: wallTop,
+                        left: wallLeft
+                    }
+                    let wallExampleEx = {
+                        top: wallTop,
+                        left: wallLeft+50
+                    }
+                    wallList.push(wallExample);
+                    wallList.push(wallExampleEx);
                 }
                 
                 spawnArea.appendChild(beLife);
@@ -254,27 +269,39 @@ class enemySpawn{
 
                     let birdTop = enemyShortcut[i].startPos[0];
                     let birdLeft = enemyShortcut[i].startPos[1];
-
-                    //* Storing values outside of loop
-                    birdListTop.push(birdTop);
-                    birdListLeft.push(birdLeft);
-                    enemyList.push(enemyShortcut[i]);
+                    let birdVision = enemyShortcut[i].viewDistance;
 
                     console.log(`bird y: ${birdTop} x: ${birdLeft}`)
                     gsap.to(beLife, {top: birdTop, left:birdLeft, duration:0});
-                } else if(enemyShortcut[i].type=="snake"){
+
+                    //* Storing values outside of loop
+                    let birdExample = {
+                        type: "bird",
+                        top: birdTop,
+                        left: birdLeft,
+                        viewDistance: birdVision
+                    }
+                    enemyList.push(birdExample);
+                } 
+                else if(enemyShortcut[i].type=="snake"){
                     beLife.classList.add("snake");
 
                     let snakeTop = enemyShortcut[i].startPos[0];
                     let snakeLeft = enemyShortcut[i].startPos[1];
+                    let snakeVision = enemyShortcut[i].viewDistance;
 
                     //* Storing values outside of loop
-                    snakeListTop.push(snakeTop);
-                    snakeListLeft.push(snakeLeft);
-                    enemyList.push(enemyShortcut[i]);
 
                     console.log(`snake y: ${snakeTop} x: ${snakeLeft}`)
                     gsap.to(beLife, {top: snakeTop, left:snakeLeft, duration:0});
+
+                    let snakeExample = {
+                        type: "snake",
+                        top: snakeTop,
+                        left: snakeLeft,
+                        viewDistance: snakeVision
+                    }
+                    enemyList.push(snakeExample);
                 }
                 
                 spawnArea.appendChild(beLife);
