@@ -36,7 +36,7 @@
                 },
                 {
                     "type": "snake",
-                    "startPos": [150, 0],
+                    "startPos": [150, 100],
                     "viewDistance": 150
                 }
                 
@@ -91,7 +91,6 @@
                     "startPos": [200, 250],
                     "wallType": "oneLong"
                 },
-
                 {
                     "obstacleName": "wall",
                     "startPos": [300, 150],
@@ -105,13 +104,22 @@
                 {
                     "obstacleName": "wall",
                     "startPos": [300, 350],
-                    "wallType": "oneoLong"
+                    "wallType": "oneLong"
                 },
-
                 {
                     "obstacleName": "wall",
-                    "startPos": [350, 300],
+                    "startPos": [350, 350],
                     "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "rock",
+                    "startPos": [200, 300],
+                    "wallType": "rock"
+                },
+                {
+                    "obstacleName": "rock",
+                    "startPos": [250, 350],
+                    "wallType": "rock"
                 }
             ],
             "Interactables": {
@@ -125,7 +133,6 @@
                     "startPos": "250, 300",
                     "pushable": "pushable",
                     "tangeable": true
-
                 }
             },
             "bonus": [

@@ -62,14 +62,41 @@ function moveDir(motionDir){
     let playBonk = false;
     for(let i = 0; i < wallList.length; i++){
         if(newLeft == wallList[i].left & newTop == wallList[i].top){
-            console.log("wall");
+            if (wallList[i].type == "rock"){
+                newRockLeft = wallList[i].left + (speed*motionDir.hs);
+                newRockTop =  wallList[i].top + (speed*motionDir.vs);
+                for(let j = 0; j < wallList.length; j++){
+                    if(newRockLeft == wallList[j].left & newRockTop == wallList[j].top){
+                        console.log(wallList[j])
+                        console.log("Rock hits wall");
+                        return;
+                    }
+                } 
+                for(let j = 0; j < enemyList.length; j++){
+                    if (newRockLeft == enemyList[j].left & newRockTop == enemyList[j].top){
+                        console.log("Rock hits enemy");
+                        return;
+                    }
+                }
+                console.log("rock push");
+                console.log(`Rock is at ${newRockTop} and ${newRockLeft}`)
+                gsap.to(`#${wallList[i].name}`, {top: newRockTop, left:newRockLeft, duration:0});
+                console.log(`I am at ${heroTop} and ${heroLeft}`)
+                wallList[i].left = newRockLeft;
+                wallList[i].top = newRockTop;
+                heroLeft = prevLeft;
+                heroTop = prevTop;
+                return;
+            } else{
+            console.log(`${wallList[i].name}`);
             playBonk = true;
             console.log(`I am at ${heroTop} and ${heroLeft}`)
             heroLeft = prevLeft;
             heroTop = prevTop;
             return;
+            }
         }
-    } 
+    }
     for(let i = 0; i < enemyList.length; i++){
         if (enemyList[i].type == "bird"){
             if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
@@ -130,20 +157,37 @@ class WallSpawn{
             console.log(wallShortcut);
             for (let i = 0; i < wallShortcut.length; i++){
                 let beLife = document.createElement("div");
+                let name = `wall${[i]}`
+                beLife.id = name
                 beLife.classList.add("wall");
 
-                if(wallShortcut[i].wallType=="oneLong"){
+                if(wallShortcut[i].wallType=="rock"){
+                    beLife.classList.add("rock");
+                    let rockTop = wallShortcut[i].startPos[0];
+                    let rockLeft = wallShortcut[i].startPos[1];
+                    console.log(`rock y: ${rockTop} x: ${rockLeft}`)
+                    gsap.to(beLife, {top: rockTop, left:rockLeft, duration:0});
+                    let rockExample = {
+                        name: name,
+                        type: "rock",
+                        top: rockTop,
+                        left: rockLeft,
+                    }
+                    wallList.push(rockExample);
+                }
+                else if(wallShortcut[i].wallType=="oneLong"){
                     beLife.classList.add("oneLong");
                     let wallTop = wallShortcut[i].startPos[0];
                     let wallLeft = wallShortcut[i].startPos[1];
                     console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
                     gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
                     let wallExample = {
+                        name: name,
+                        type: "wall",
                         top: wallTop,
                         left: wallLeft,
                     }
                     wallList.push(wallExample);
-
                 }
                 else{
                     beLife.classList.add("twoLong");
@@ -152,10 +196,14 @@ class WallSpawn{
                     console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
                     gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
                     let wallExample = {
+                        name: name,
+                        type: "wall",
                         top: wallTop,
                         left: wallLeft
                     }
                     let wallExampleEx = {
+                        name: name,
+                        type: "wall",
                         top: wallTop,
                         left: wallLeft+50
                     }
@@ -184,7 +232,7 @@ class enemySpawn{
             console.log(enemyShortcut);
             for (let i = 0; i < enemyShortcut.length; i++){
                 let beLife = document.createElement("div");
-                beLife.classList.add("wall");
+                beLife.classList.add("enemy");
 
                 if(enemyShortcut[i].type=="bird"){
                     beLife.classList.add("bird");
