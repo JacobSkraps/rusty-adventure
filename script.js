@@ -80,7 +80,7 @@ function moveDir(motionDir){
                 }
                 console.log("rock push");
                 console.log(`Rock is at ${newRockTop} and ${newRockLeft}`)
-                gsap.to(`#${wallList[i].name}`, {top: newRockTop, left:newRockLeft, duration:0});
+                gsap.to(`#${wallList[i].name}`, {top: newRockTop, left:newRockLeft, duration:0.5, ease: "circ.out"});
                 console.log(`I am at ${heroTop} and ${heroLeft}`)
                 wallList[i].left = newRockLeft;
                 wallList[i].top = newRockTop;
