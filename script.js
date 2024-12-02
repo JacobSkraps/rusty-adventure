@@ -16,7 +16,7 @@ let heroTop = 400;
 let heroLeft = 400;
 hero.style.top = `${heroTop}px`;
 hero.style.left = `${heroLeft}px`;
-
+heroHiding = false;
 heroAlive = true;
 
 wallList = [];
@@ -24,6 +24,8 @@ wallList = [];
 enemyList = [];
 
 bonusList = [];
+
+shellList = [];
 
 //* Wall/snake location storers
 
@@ -44,10 +46,19 @@ let keyPressAction = (e) => {
         case 39:
             moveDir({hs:1, vs:0});
             break;
+        // case 82:
+        //     //* Heres where I would put my restart button IF I HAD ONE
+        //     console.log("start restart");
+        //     break;
         case 82:
-            //* Heres where I would put my restart button IF I HAD ONE
-            console.log("start restart");
-            break;
+            //* Hide
+            for(let i = 0; i < shellList.length; i++){
+                if(heroLeft == shellList[i].left & heroTop == shellList[i].top){
+                    console.log("Hide");
+                    hide();
+                    break;
+                }
+            };
     }
 }
 
@@ -55,7 +66,9 @@ let keyPressAction = (e) => {
 document.addEventListener("keydown", keyPressAction);
 //* this is a function declaration, it gets hoisted to the top
 function moveDir(motionDir){
-
+    if (heroHiding == true){
+        return;
+    }
     if (heroAlive == false){
         return;
     }
@@ -116,12 +129,14 @@ function moveDir(motionDir){
                         birdLeft = birdLeft+50
                         gsap.to(`#${enemyList[i].name}`, {left:birdLeft, duration: .4 });
                         console.log("bird move")
-                        if(enemyList[i].top == heroTop && birdLeft == heroLeft){
-                            console.log("The bird got you!");
-                            clearInterval(birdMove);
-                            heroDie();
-                            heroAlive = false
-                        }
+                        if(heroAlive == true && heroHiding == false){
+                            if(enemyList[i].top == heroTop && birdLeft == heroLeft){
+                                console.log("The bird got you!");
+                                clearInterval(birdMove);
+                                    heroDie();
+                                    heroAlive = false
+                                }
+                            }
                         for(let j = 0; j < wallList.length; j++){
                             if(birdLeft == wallList[j].left && enemyList[i].top == wallList[j].top){
                                 console.log("bird hit wall");
@@ -195,6 +210,17 @@ function moveDir(motionDir){
     //Put timeout on movement
 }
 
+function hide(){
+    if(heroHiding == false){
+        gsap.to(hero, {scale: 0.25, opacity:0, duration: 1, ease:"power1.in"});
+        heroHiding = true;
+    }
+    else if(heroHiding == true){
+        gsap.to(hero, {scale: 1, opacity:1, duration: 1, ease:"power1.in"});
+        heroHiding = false;
+    }
+};
+
 function heroDie(){
     console.log("Hero is dead!");
 
@@ -210,7 +236,7 @@ function heroDie(){
     pageBody.appendChild(myPara);
     myPara2.classList.add("deadText");
     myPara.classList.add("deadText");
-    gsap.fromTo(".deadText", {opactiy:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
 };
 
@@ -387,12 +413,48 @@ class collectableAdd{
                 
                 spawnArea.appendChild(beLife);
             };
-
         })
         .catch(err =>console.log(err));
     }
 }
 
 let bowr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+
+class interactableAdd{
+    constructor(dataSource, spawnArea){
+        fetch(dataSource, spawnArea)
+        .then(response => response.json())
+        .then(stats => {
+            let interactShortcut = stats.levelInformation.levelOne.Interactables
+            console.log(interactShortcut);
+            for (let i = 0; i < interactShortcut.length; i++){
+                let beLife = document.createElement("div");
+                let name = `shell${[i]}`
+                beLife.id = name
+                let interactType = interactShortcut[i].type
+                beLife.classList.add(interactType);
+            
+                let shellTop = interactShortcut[i].startPos[0];
+                let shellLeft = interactShortcut[i].startPos[1];
+
+                console.log(`shell y: ${shellTop} x: ${shellLeft}`)
+                gsap.to(beLife, {top: shellTop, left:shellLeft, duration:0});
+
+                let shellExample = {
+                    name: name,
+                    type: interactType,
+                    top: shellTop,
+                    left: shellLeft,
+                }
+                shellList.push(shellExample);
+                
+                spawnArea.appendChild(beLife);
+            };
+        })
+        .catch(err =>console.log(err));
+    }
+}
+
+let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
 
 //* Rock movement (Check if space beyond rock is available is not no move rock)

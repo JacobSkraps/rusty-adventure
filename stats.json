@@ -122,19 +122,12 @@
                     "wallType": "rock"
                 }
             ],
-            "Interactables": {
-                "shellOne": {
-                    "startPos": "300, 200",
-                    "hiding": "hideable",
-                    "tangeable": false
-
-                },
-                "rockOne": {
-                    "startPos": "250, 300",
-                    "pushable": "pushable",
-                    "tangeable": true
+            "Interactables": [
+                {
+                    "type": "shell",
+                    "startPos": [250, 200]
                 }
-            },
+            ],
             "bonus": [
                 {
                     "collectableType": "bow",

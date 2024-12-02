@@ -41,6 +41,7 @@ main{
     height: 50px;
     position: absolute;
     background-color: blue;
+    z-index: 1;
 }
 .creature{
     width: 50px;
@@ -54,36 +55,47 @@ main{
     height: 50px;
     position: absolute;
     background-color: rgb(152, 70, 70);
+    z-index: 2;
 }
 .oneLong{
     width: 50px;
     height: 50px;
     position: absolute;
     background-color: brown;
+    z-index: 2;
 }
 .twoLong{
     width: 100px;
     height: 50px;
     position: absolute;
     background-color: rgb(124, 29, 29);
+    z-index: 2;
 }
 .bird{
     width: 50px;
     height: 50px;
     position: absolute;
     background-color: white;
+    z-index: 3;
 }
 .snake{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: red; 
+    background-color: red;
+    z-index: 3;
 }
 .bow{
     width: 50px;
     height: 50px;
     position: absolute;
     background-color: pink; 
+}
+.shell{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: yellow; 
 }
 
 .deadText{
