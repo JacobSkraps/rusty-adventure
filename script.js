@@ -11,9 +11,9 @@ let playSpace = document.querySelector("#playSpace");
 //* reference the main character
 let hero = document.querySelector("#hero");
 let heroPos = hero.getBoundingClientRect();
-console.log(heroPos.width);
+
 let heroTop = 400;
-let heroLeft = 400;
+let heroLeft = 200;
 hero.style.top = `${heroTop}px`;
 hero.style.left = `${heroLeft}px`;
 heroHiding = false;
@@ -33,7 +33,6 @@ shellList = [];
 //* it does not get hoisted to the top of the function
 //* but it can be used as an IIFE(immediately invoked function expression)!
 let keyPressAction = (e) => {
-    console.log(e);
     switch(e.keyCode){
         
         case 38:
@@ -255,6 +254,8 @@ class WallSpawn{
                 let name = `wall${[i]}`
                 beLife.id = name
                 beLife.classList.add("wall");
+                beLife.classList.add("removeable");
+
 
                 if(wallShortcut[i].wallType=="rock"){
                     beLife.classList.add("rock");
@@ -330,6 +331,7 @@ class enemySpawn{
                 let name = `enemy${[i]}`
                 beLife.id = name
                 beLife.classList.add("enemy");
+                beLife.classList.add("removeable");
 
                 if(enemyShortcut[i].type=="bird"){
                     beLife.classList.add("bird");
@@ -394,10 +396,11 @@ class collectableAdd{
             console.log(bonusShortcut);
             for (let i = 0; i < bonusShortcut.length; i++){
                 let beLife = document.createElement("div");
-                let name = `collectableSpawn{[i]}`
+                let name = `collectable${[i]}`
                 beLife.id = name
                 let bonusType = bonusShortcut[i].collectableType
                 beLife.classList.add(bonusType);
+                beLife.classList.add("removeable");
             
                 let bonusTop = bonusShortcut[i].startPos[0];
                 let bonusLeft = bonusShortcut[i].startPos[1];
@@ -435,6 +438,8 @@ class interactableAdd{
                 beLife.id = name
                 let interactType = interactShortcut[i].type
                 beLife.classList.add(interactType);
+                beLife.classList.add("removeable");
+
             
                 let shellTop = interactShortcut[i].startPos[0];
                 let shellLeft = interactShortcut[i].startPos[1];
@@ -465,8 +470,24 @@ function startRound(){
     bonusList = [];
     shellList = [];
 
+    //* Remove all elements
+    function removeElementsByClass(removeable){
+        console.log("Starting removing");
+        const elements = document.getElementsByClassName(removeable);
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
+            console.log("Removed element");
+        }
+    };
+    removeElementsByClass('removeable');
+
+    
+    //* Put the hero in his place
     heroTop = 400;
-    heroLeft = 400;
+    heroLeft = 200;
+    heroHiding = false;
+    heroAlive = true;
+    gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
 
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
@@ -474,3 +495,8 @@ function startRound(){
     let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
 };
 startRound();
+
+// let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+// let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
+// let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+// let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
