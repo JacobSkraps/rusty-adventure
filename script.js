@@ -105,7 +105,17 @@ function moveDir(motionDir){
         }
         if (enemyList[i].type == "snake"){
             if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
+                noBite = false
+                for(let j = 0; j < wallList.length; j++){
+                    if(wallList[j].left < newLeft && wallList[j].left > enemyList[i].left && enemyList[i].top == wallList[j].top){
+                        console.log("Rock in way of snake");
+                        noBite = true
+                    }
+                }
+                if(noBite == false){
                     console.log("Snakebite");
+                    gsap.to(`#${enemyList[i].name}`, {width: 200, duration:0.5, ease: "circ.out"});
+                }
             } 
         }
     }
@@ -171,7 +181,7 @@ class WallSpawn{
                         name: name,
                         type: "rock",
                         top: rockTop,
-                        left: rockLeft,
+                        left: rockLeft
                     }
                     wallList.push(rockExample);
                 }
@@ -232,6 +242,8 @@ class enemySpawn{
             console.log(enemyShortcut);
             for (let i = 0; i < enemyShortcut.length; i++){
                 let beLife = document.createElement("div");
+                let name = `enemy${[i]}`
+                beLife.id = name
                 beLife.classList.add("enemy");
 
                 if(enemyShortcut[i].type=="bird"){
@@ -266,6 +278,7 @@ class enemySpawn{
                     gsap.to(beLife, {top: snakeTop, left:snakeLeft, duration:0});
 
                     let snakeExample = {
+                        name: name,
                         type: "snake",
                         top: snakeTop,
                         left: snakeLeft,
