@@ -17,6 +17,7 @@ let heroLeft = 400;
 hero.style.top = `${heroTop}px`;
 hero.style.left = `${heroLeft}px`;
 
+heroAlive = true;
 
 wallList = [];
 
@@ -54,6 +55,10 @@ let keyPressAction = (e) => {
 document.addEventListener("keydown", keyPressAction);
 //* this is a function declaration, it gets hoisted to the top
 function moveDir(motionDir){
+
+    if (heroAlive == false){
+        return;
+    }
     prevLeft = heroLeft;
     prevTop =  heroTop;
 
@@ -66,14 +71,14 @@ function moveDir(motionDir){
                 newRockLeft = wallList[i].left + (speed*motionDir.hs);
                 newRockTop =  wallList[i].top + (speed*motionDir.vs);
                 for(let j = 0; j < wallList.length; j++){
-                    if(newRockLeft == wallList[j].left & newRockTop == wallList[j].top){
+                    if(newRockLeft == wallList[j].left && newRockTop == wallList[j].top){
                         console.log(wallList[j])
                         console.log("Rock hits wall");
                         return;
                     }
                 } 
                 for(let j = 0; j < enemyList.length; j++){
-                    if (newRockLeft == enemyList[j].left & newRockTop == enemyList[j].top){
+                    if (newRockLeft == enemyList[j].left && newRockTop == enemyList[j].top){
                         console.log("Rock hits enemy");
                         return;
                     }
@@ -100,13 +105,42 @@ function moveDir(motionDir){
     for(let i = 0; i < enemyList.length; i++){
         if (enemyList[i].type == "bird"){
             if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
+                if(enemyList[i].hunting == false){
                     console.log("bird spots you");
+
+                    enemyList[i].hunting = true
+                    let birdLeft = enemyList[i].left
+
+                    //*Interval for bird moving
+                    let birdMove = setInterval(() => {
+                        birdLeft = birdLeft+50
+                        gsap.to(`#${enemyList[i].name}`, {left:birdLeft, duration: .4 });
+                        console.log("bird move")
+                        if(enemyList[i].top == heroTop && birdLeft == heroLeft){
+                            console.log("The bird got you!");
+                            clearInterval(birdMove);
+                            heroDie();
+                            heroAlive = false
+                        }
+                        for(let j = 0; j < wallList.length; j++){
+                            if(birdLeft == wallList[j].left && enemyList[i].top == wallList[j].top){
+                                console.log("bird hit wall");
+                                clearInterval(birdMove);
+                            }
+                        }
+                    }, 400);
+                }
+                if(enemyList[i].top == heroTop && enemyList[i].left == heroLeft){
+                    console.log("The bird got you!");
+                }
             } 
         }
         if (enemyList[i].type == "snake"){
             if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
-                noBite = false
-                for(let j = 0; j < wallList.length; j++){
+                    //* Store for snakebite if snakebite is true
+                    noBite = false
+                    //* Loop to figure out if rock if between hero and snake
+                    for(let j = 0; j < wallList.length; j++){
                     if(wallList[j].left < newLeft && wallList[j].left > enemyList[i].left && enemyList[i].top == wallList[j].top){
                         console.log("Rock in way of snake");
                         noBite = true
@@ -114,7 +148,10 @@ function moveDir(motionDir){
                 }
                 if(noBite == false){
                     console.log("Snakebite");
-                    gsap.to(`#${enemyList[i].name}`, {width: 200, duration:0.5, ease: "circ.out"});
+                    let snakeExtend = newLeft - enemyList[i].left + 50
+                    gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, duration:0.5, ease: "circ.out"});
+                    heroDie();
+                    heroAlive = false
                 }
             } 
         }
@@ -156,6 +193,25 @@ function moveDir(motionDir){
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
     //Put timeout on movement
 }
+
+function heroDie(){
+    console.log("Hero is dead!");
+
+    let header = "Oh no,";
+    let myPhrase = "Rusty died!";
+    let pageBody = document.querySelector("#playSpace");
+    let myPara = document.createElement("p");
+    let myPara2 = document.createElement("p");
+
+    myPara2.innerText = header;
+    myPara.innerText = myPhrase;
+    pageBody.appendChild(myPara2);
+    pageBody.appendChild(myPara);
+    myPara2.classList.add("deadText");
+    myPara.classList.add("deadText");
+    gsap.fromTo(".deadText", {opactiy:0, y:-800}, {opactiy:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
+};
 
 class WallSpawn{
     constructor(dataSource, spawnArea){
@@ -258,10 +314,12 @@ class enemySpawn{
 
                     //* Storing values outside of loop
                     let birdExample = {
+                        name: name,
                         type: "bird",
                         top: birdTop,
                         left: birdLeft,
-                        viewDistance: birdVision
+                        viewDistance: birdVision,
+                        hunting: false
                     }
                     enemyList.push(birdExample);
                 } 

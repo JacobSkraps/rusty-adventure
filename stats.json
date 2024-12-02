@@ -31,7 +31,7 @@
             "Enemies" : [
                 {
                     "type": "bird",
-                    "startPos": [300, 100],
+                    "startPos": [250, 0],
                     "viewDistance": 400
                 },
                 {
