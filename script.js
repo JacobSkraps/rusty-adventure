@@ -159,7 +159,8 @@ function moveDir(motionDir){
         for(let i = 0; i < bonusList.length; i++){
             if (newLeft == bonusList[i].left & newTop == bonusList[i].top){
             console.log(`I found a ${bonusList[i].type}!`);
-            
+            console.log(`${bonusList[i].name}`);
+            gsap.to(`#${bonusList[i].name}`, {opacity: 0, duration:0.5, ease: "circ.out"});
         }
     }
         
@@ -209,7 +210,7 @@ function heroDie(){
     pageBody.appendChild(myPara);
     myPara2.classList.add("deadText");
     myPara.classList.add("deadText");
-    gsap.fromTo(".deadText", {opactiy:0, y:-800}, {opactiy:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.fromTo(".deadText", {opactiy:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
 };
 
@@ -365,6 +366,8 @@ class collectableAdd{
             console.log(bonusShortcut);
             for (let i = 0; i < bonusShortcut.length; i++){
                 let beLife = document.createElement("div");
+                let name = `collectable${[i]}`
+                beLife.id = name
                 let bonusType = bonusShortcut[i].collectableType
                 beLife.classList.add(bonusType);
             
@@ -375,6 +378,7 @@ class collectableAdd{
                 gsap.to(beLife, {top: bonusTop, left:bonusLeft, duration:0});
 
                 let bonusExample = {
+                    name: name,
                     type: bonusType,
                     top: bonusTop,
                     left: bonusLeft,
