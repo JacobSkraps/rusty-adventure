@@ -18,6 +18,7 @@ hero.style.top = `${heroTop}px`;
 hero.style.left = `${heroLeft}px`;
 heroHiding = false;
 heroAlive = true;
+heroMovable = true;
 
 wallList = [];
 
@@ -33,6 +34,9 @@ shellList = [];
 //* it does not get hoisted to the top of the function
 //* but it can be used as an IIFE(immediately invoked function expression)!
 let keyPressAction = (e) => {
+    if (heroMovable == false){
+        return;
+    }
     switch(e.keyCode){
         
         case 38:
@@ -131,12 +135,11 @@ function moveDir(motionDir){
                         gsap.to(`#${enemyList[i].name}`, {left:birdLeft, duration: .4 });
                         console.log("bird move")
                         if(heroAlive == true && heroHiding == false){
-                            if(enemyList[i].top == heroTop && birdLeft == heroLeft){
+                            if(enemyList[i].top == heroTop && birdLeft == heroLeft || heroAlive == false){
                                 console.log("The bird got you!");
                                 clearInterval(birdMove);
                                     heroDie();
                                     heroAlive = false
-                                    setTimeout(startRound,2500);
                                 }
                             }
                         for(let j = 0; j < wallList.length; j++){
@@ -169,7 +172,6 @@ function moveDir(motionDir){
                     gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, duration:0.5, ease: "circ.out"});
                     heroDie();
                     heroAlive = false
-                    setTimeout(startRound,2500);
                 }
             } 
         }
@@ -177,7 +179,6 @@ function moveDir(motionDir){
         for(let i = 0; i < bonusList.length; i++){
             if (newLeft == bonusList[i].left & newTop == bonusList[i].top){
             console.log(`I found a ${bonusList[i].type}!`);
-            console.log(`${bonusList[i].name}`);
             gsap.to(`#${bonusList[i].name}`, {opacity: 0, duration:0.5, ease: "circ.out"});
         }
     }
@@ -241,6 +242,8 @@ function heroDie(){
     myPara.classList.add("deadText");
     gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
+    setTimeout(startRound, 2500);
+
 };
 
 class WallSpawn{
@@ -465,12 +468,33 @@ class interactableAdd{
 }
 
 // let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
-
+function resetPos(){
+    //* Put the hero in his place
+    heroTop = 400;
+    heroLeft = 200;
+    heroHiding = false;
+    heroAlive = true;
+    gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
+}
+function disableControls(){
+    //* I am lazy, this is here so that I can use setTimeout
+    heroMovable = true;
+    heroAlive = true;
+}
+function spawnStuff(){
+    let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+    let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
+    let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+    let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+}
 function startRound(){
+    heroAlive = false;
+    heroMovable = false;
     wallList = [];
     enemyList = [];
     bonusList = [];
     shellList = [];
+
 
     //* Remove all elements
     function removeElementsByClass(removeable){
@@ -484,18 +508,10 @@ function startRound(){
     removeElementsByClass('removeable');
     removeElementsByClass('deadText');
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(0%)'}, duration: 1, ease:"bounce"});
-        //* Put the hero in his place
-        heroTop = 400;
-        heroLeft = 200;
-        heroHiding = false;
-        heroAlive = true;
-        gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
-        setTimeout(1000);
-        let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
-        let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
-        let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
-        let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
-        heroAlive = true;
+
+    setTimeout(resetPos, 400);
+    setTimeout(spawnStuff, 400);
+    setTimeout(disableControls, 400);
 };
 startRound();
 
