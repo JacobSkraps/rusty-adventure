@@ -33,7 +33,9 @@ shellList = [];
 //* it does not get hoisted to the top of the function
 //* but it can be used as an IIFE(immediately invoked function expression)!
 let keyPressAction = (e) => {
+    console.log(e);
     switch(e.keyCode){
+        
         case 38:
             moveDir({hs:0, vs:-1});
             break;
@@ -46,11 +48,11 @@ let keyPressAction = (e) => {
         case 39:
             moveDir({hs:1, vs:0});
             break;
-        // case 82:
-        //     //* Heres where I would put my restart button IF I HAD ONE
-        //     console.log("start restart");
-        //     break;
-        case 82:
+        case 82:            
+            console.log("start restart");
+            startRound();
+            break;
+        case 69:
             //* Hide
             for(let i = 0; i < shellList.length; i++){
                 if(heroLeft == shellList[i].left & heroTop == shellList[i].top){
@@ -311,7 +313,7 @@ class WallSpawn{
         .catch(err =>console.log(err));
     }
 }
-let WallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+// let WallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
 
 //* Player detection for snake is off loaded to play movement
 
@@ -380,7 +382,7 @@ class enemySpawn{
     }
 }
 
-let snakeOner = new enemySpawn("stats.json", document.querySelector("#playSpace"));
+// let snakeOner = new enemySpawn("stats.json", document.querySelector("#playSpace"));
 
 
 class collectableAdd{
@@ -392,7 +394,7 @@ class collectableAdd{
             console.log(bonusShortcut);
             for (let i = 0; i < bonusShortcut.length; i++){
                 let beLife = document.createElement("div");
-                let name = `collectable${[i]}`
+                let name = `collectableSpawn{[i]}`
                 beLife.id = name
                 let bonusType = bonusShortcut[i].collectableType
                 beLife.classList.add(bonusType);
@@ -418,7 +420,7 @@ class collectableAdd{
     }
 }
 
-let bowr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+// let bowr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
 
 class interactableAdd{
     constructor(dataSource, spawnArea){
@@ -455,6 +457,20 @@ class interactableAdd{
     }
 }
 
-let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+// let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
 
-//* Rock movement (Check if space beyond rock is available is not no move rock)
+function startRound(){
+    wallList = [];
+    enemyList = [];
+    bonusList = [];
+    shellList = [];
+
+    heroTop = 400;
+    heroLeft = 400;
+
+    let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+    let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
+    let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+    let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+};
+startRound();
