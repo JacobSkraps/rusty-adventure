@@ -136,6 +136,7 @@ function moveDir(motionDir){
                                 clearInterval(birdMove);
                                     heroDie();
                                     heroAlive = false
+                                    setTimeout(startRound,2500);
                                 }
                             }
                         for(let j = 0; j < wallList.length; j++){
@@ -168,6 +169,7 @@ function moveDir(motionDir){
                     gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, duration:0.5, ease: "circ.out"});
                     heroDie();
                     heroAlive = false
+                    setTimeout(startRound,2500);
                 }
             } 
         }
@@ -480,19 +482,20 @@ function startRound(){
         }
     };
     removeElementsByClass('removeable');
-
-    
-    //* Put the hero in his place
-    heroTop = 400;
-    heroLeft = 200;
-    heroHiding = false;
-    heroAlive = true;
-    gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
-
-    let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
-    let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
-    let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
-    let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+    removeElementsByClass('deadText');
+    gsap.to("#playSpace", {css:{ 'filter': 'grayscale(0%)'}, duration: 1, ease:"bounce"});
+        //* Put the hero in his place
+        heroTop = 400;
+        heroLeft = 200;
+        heroHiding = false;
+        heroAlive = true;
+        gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
+        setTimeout(1000);
+        let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+        let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
+        let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
+        let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+        heroAlive = true;
 };
 startRound();
 
