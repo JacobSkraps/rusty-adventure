@@ -23,7 +23,7 @@ main{
     position: relative;
 }
 #playSpace{
-    background-color:aquamarine;
+    background-color:rgb(233, 206, 161);
     width: 550px;
     height: 500px;
     border: 1px solid black;
@@ -40,8 +40,11 @@ main{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: blue;
+    background-image: url("Crab.png");
+    background-size: cover;
+    image-rendering: pixelated;
     z-index: 1;
+    
 }
 .creature{
     width: 50px;
@@ -54,28 +57,36 @@ main{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: rgb(152, 70, 70);
+    background-image: url("rock.png");
+    background-size: cover;
+    image-rendering: pixelated;
     z-index: 2;
 }
 .oneLong{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: brown;
+    background-image: url("wall.png");
+    background-size: cover;
+    image-rendering: pixelated;
     z-index: 2;
 }
 .twoLong{
     width: 100px;
     height: 50px;
     position: absolute;
-    background-color: rgb(124, 29, 29);
+    background-image: url("Lwall.png");
+    background-size: cover;
+    image-rendering: pixelated;
     z-index: 2;
 }
 .bird{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: white;
+    background-image: url("bird.png");
+    background-size: cover;
+    image-rendering: pixelated;
     z-index: 3;
 }
 .snake{
@@ -89,13 +100,18 @@ main{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: pink; 
+    background-image: url("bow.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 0.75rem rgb(255, 255, 255));
 }
 .shell{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: yellow; 
+    background-image: url("shell.png");
+    background-size: cover;
+    image-rendering: pixelated;
 }
 
 .deadText{
