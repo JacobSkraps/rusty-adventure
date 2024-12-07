@@ -286,7 +286,7 @@ function heroWin(){
     myPara2.classList.add("Text");
 
     gsap.fromTo(".winText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
-    gsap.to("#playSpace", {css:{ 'filter': 'grayscale(80%)'}, duration: 1, ease:"bounce"});
+    gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
     setTimeout(startRound, 2500);
 
 };

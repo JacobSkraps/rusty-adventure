@@ -141,13 +141,16 @@ main{
     font-size: 72px;
     padding: 30px;
     z-index: 10000;
+    text-align: center;
 }
 .winText{
     position: relative;
-    color: gold;
+    margin: auto;
+    color: white;
     font-size: 72px;
     padding: 30px;
     z-index: 10000;
+    /* filter: brightness(110%); */
 }
 
 #instructions>p{
