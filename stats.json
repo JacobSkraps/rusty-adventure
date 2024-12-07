@@ -134,7 +134,12 @@
                     "collected": false,
                     "startPos": [100, 150]
                 }
-            ]
+            ],
+            "End":
+                {
+                "startPos": [0, 100],
+                "endPos": [100, 400]
+                }
         }
     }
 }

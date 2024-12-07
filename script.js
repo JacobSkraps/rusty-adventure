@@ -28,6 +28,9 @@ bonusList = [];
 
 shellList = [];
 
+endLocation = {};
+
+
 //* Wall/snake location storers
 
 //* keyboard commands - this is a function expression
@@ -209,9 +212,13 @@ function moveDir(motionDir){
             footsteps.play();
         }
         console.log(`I am at ${heroTop} and ${heroLeft}`)
-    
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
-    //Put timeout on movement
+    if (heroTop >= endLocation.startY && heroTop <= endLocation.endY){
+        console.log("same height");
+        if(heroLeft >= endLocation.startX && heroLeft <= endLocation.endX){
+        console.log("Level Finish");
+        }
+    }
 }
 
 function hide(){
@@ -467,6 +474,40 @@ class interactableAdd{
     }
 }
 
+class endAdd{
+    constructor(dataSource, spawnArea){
+        fetch(dataSource, spawnArea)
+        .then(response => response.json())
+        .then(stats => {
+            let endShortcut = stats.levelInformation.levelOne.End
+            console.log(endShortcut);
+            let beLife = document.createElement("div");
+            beLife.classList.add("endZone");
+            beLife.classList.add("removeable");
+
+        
+            let endStartTop = endShortcut.startPos[0];
+            let endStartLeft = endShortcut.startPos[1];
+            let endEndTop = endShortcut.endPos[0];
+            let endEndLeft = endShortcut.endPos[1];
+            let endHeight = endEndTop - endStartTop
+            let endWidth = endEndLeft - endStartLeft
+
+            console.log(`end start y: ${endStartTop} x: ${endStartLeft} end  y: ${endEndTop} x: ${endEndLeft}, width: ${endWidth} height: ${endHeight}`)
+            gsap.to(beLife, {top: endStartTop, left:endStartLeft, duration:0, width: endWidth, height: endHeight});
+
+            endLocation = {
+                startY: endStartTop,
+                startX: endStartLeft,
+                endY: endEndTop,
+                endX: endEndLeft,
+            }            
+            spawnArea.appendChild(beLife);
+        })
+        .catch(err =>console.log(err));
+    }
+}
+
 // let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
 function resetPos(){
     //* Put the hero in his place
@@ -486,6 +527,7 @@ function spawnStuff(){
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
     let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
     let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+    let endSpawnr = new endAdd("stats.json", document.querySelector("#playSpace"));
 }
 function startRound(){
     heroAlive = false;
@@ -494,6 +536,7 @@ function startRound(){
     enemyList = [];
     bonusList = [];
     shellList = [];
+    endList = [];
 
 
     //* Remove all elements
@@ -509,9 +552,9 @@ function startRound(){
     removeElementsByClass('deadText');
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(0%)'}, duration: 1, ease:"bounce"});
 
-    setTimeout(resetPos, 400);
-    setTimeout(spawnStuff, 400);
-    setTimeout(disableControls, 400);
+    setTimeout(resetPos, 300);
+    setTimeout(spawnStuff, 300);
+    setTimeout(disableControls, 300);
 };
 startRound();
 
