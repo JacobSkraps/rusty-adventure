@@ -122,6 +122,23 @@
                     "wallType": "rock"
                 }
             ],
+            "OutWalls": [
+                {
+                    "face": "Right",
+                    "startPos": [0, 0],
+                    "endPos": [500, 100]
+                },
+                {
+                    "face": "Up",
+                    "startPos": [450, 100],
+                    "endPos": [500, 450]
+                },
+                {
+                    "face": "Left",
+                    "startPos": [0, 450],
+                    "endPos": [500, 550]
+                }
+            ],
             "Interactables": [
                 {
                     "type": "shell",
@@ -138,7 +155,7 @@
             "End":
                 {
                 "startPos": [0, 100],
-                "endPos": [100, 400]
+                "endPos": [100, 450]
                 }
         }
     }

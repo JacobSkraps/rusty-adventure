@@ -21,6 +21,7 @@ heroAlive = true;
 heroMovable = true;
 
 wallList = [];
+outWallList = [];
 
 enemyList = [];
 
@@ -123,6 +124,14 @@ function moveDir(motionDir){
             }
         }
     }
+    for(let i = 0; i < outWallList.length; i++){
+        if (newTop >= outWallList[i].startY && newTop < outWallList[i].endY){
+            if(newLeft >= outWallList[i].startX && newLeft < outWallList[i].endX){
+                console.log("crab hit outer wall");
+                return;
+            }
+        }
+    }
     for(let i = 0; i < enemyList.length; i++){
         if (enemyList[i].type == "bird"){
             if (newLeft <= enemyList[i].left + enemyList[i].viewDistance & newTop == enemyList[i].top){
@@ -149,6 +158,7 @@ function moveDir(motionDir){
                             if(birdLeft == wallList[j].left && enemyList[i].top == wallList[j].top){
                                 console.log("bird hit wall");
                                 clearInterval(birdMove);
+                                gsap.to(`#${enemyList[i].name}`, {left:birdLeft+200, duration: .8 , delay: .6, opacity:0, ease: "power1.in"});
                             }
                         }
                     }, 400);
@@ -275,7 +285,7 @@ function heroWin(){
     myPara.classList.add("Text");
     myPara2.classList.add("Text");
 
-    gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.fromTo(".winText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(80%)'}, duration: 1, ease:"bounce"});
     setTimeout(startRound, 2500);
 
@@ -354,9 +364,58 @@ class WallSpawn{
         .catch(err =>console.log(err));
     }
 }
-// let WallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
 
-//* Player detection for snake is off loaded to play movement
+class OutWallSpawn{
+    constructor(dataSource, spawnArea){
+        fetch(dataSource, spawnArea)
+        .then(response => response.json())
+        .then(stats => {
+            let outWallShortcut = stats.levelInformation.levelOne.OutWalls
+
+            console.log(outWallShortcut);
+            for (let i = 0; i < outWallShortcut.length; i++){
+                let beLife = document.createElement("div");
+                let name = `wall${[i]}`
+                beLife.id = name
+                beLife.classList.add("outWall");
+                beLife.classList.add("removeable");
+
+
+                if(outWallShortcut[i].face=="Right"){
+                    beLife.classList.add("OutWallLeft");
+                }
+                else if(outWallShortcut[i].face=="Left"){
+                    beLife.classList.add("OutWallRight");
+                }
+                else{
+                    beLife.classList.add("OutWallTop");
+                }
+
+                let wallStartTop = outWallShortcut[i].startPos[0];
+                let wallStartLeft = outWallShortcut[i].startPos[1];
+                let wallEndTop = outWallShortcut[i].endPos[0];
+                let wallEndLeft = outWallShortcut[i].endPos[1];
+                let wallHeight = wallEndTop - wallStartTop
+                let wallWidth = wallEndLeft - wallStartLeft
+    
+                console.log(`end start y: ${wallStartTop} x: ${wallStartLeft} end  y: ${wallEndTop} x: ${wallEndLeft}, width: ${wallWidth} height: ${wallHeight}`)
+                gsap.to(beLife, {top: wallStartTop, left:wallStartLeft, duration:0, width: wallWidth, height: wallHeight});
+    
+                let outWallExample = {
+                    startY: wallStartTop,
+                    startX: wallStartLeft,
+                    endY: wallEndTop,
+                    endX: wallEndLeft,
+                }
+                outWallList.push(outWallExample);
+                
+                spawnArea.appendChild(beLife);
+            };
+
+        })
+        .catch(err =>console.log(err));
+    }
+}
 
 class enemySpawn{
     constructor(dataSource, spawnArea){
@@ -552,6 +611,7 @@ function disableControls(){
 }
 function spawnStuff(){
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+    let outWallSpawnr = new OutWallSpawn("stats.json", document.querySelector("#playSpace"));
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
     let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
     let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
