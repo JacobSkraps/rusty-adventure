@@ -213,9 +213,9 @@ function moveDir(motionDir){
         }
         console.log(`I am at ${heroTop} and ${heroLeft}`)
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
-    if (heroTop >= endLocation.startY && heroTop <= endLocation.endY){
+    if (heroTop >= endLocation.startY && heroTop < endLocation.endY){
         console.log("same height");
-        if(heroLeft >= endLocation.startX && heroLeft <= endLocation.endX){
+        if(heroLeft >= endLocation.startX && heroLeft < endLocation.endX){
         console.log("Level Finish");
         }
     }
