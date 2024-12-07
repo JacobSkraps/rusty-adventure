@@ -214,9 +214,10 @@ function moveDir(motionDir){
         console.log(`I am at ${heroTop} and ${heroLeft}`)
     gsap.to(hero, {top: heroTop, left:heroLeft, duration: .5 });
     if (heroTop >= endLocation.startY && heroTop < endLocation.endY){
-        console.log("same height");
         if(heroLeft >= endLocation.startX && heroLeft < endLocation.endX){
         console.log("Level Finish");
+        heroWin();
+        heroAlive = false
         }
     }
 }
@@ -247,8 +248,35 @@ function heroDie(){
     pageBody.appendChild(myPara);
     myPara2.classList.add("deadText");
     myPara.classList.add("deadText");
+    myPara.classList.add("Text");
+    myPara2.classList.add("Text");
+
     gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
+    setTimeout(startRound, 2500);
+
+};
+
+function heroWin(){
+    console.log("Hero got to the goal!");
+
+    let header = "Nice Job!";
+    let myPhrase = "Do it again.";
+    let pageBody = document.querySelector("#playSpace");
+    let myPara = document.createElement("p");
+    let myPara2 = document.createElement("p");
+
+    myPara2.innerText = header;
+    myPara.innerText = myPhrase;
+    pageBody.appendChild(myPara2);
+    pageBody.appendChild(myPara);
+    myPara2.classList.add("winText");
+    myPara.classList.add("winText");
+    myPara.classList.add("Text");
+    myPara2.classList.add("Text");
+
+    gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.to("#playSpace", {css:{ 'filter': 'grayscale(80%)'}, duration: 1, ease:"bounce"});
     setTimeout(startRound, 2500);
 
 };
@@ -549,7 +577,7 @@ function startRound(){
         }
     };
     removeElementsByClass('removeable');
-    removeElementsByClass('deadText');
+    removeElementsByClass('Text');
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(0%)'}, duration: 1, ease:"bounce"});
 
     setTimeout(resetPos, 300);
