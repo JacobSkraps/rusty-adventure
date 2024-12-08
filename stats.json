@@ -159,6 +159,7 @@
                 }
         },
         "levelOne" : {
+            "colour": "425495",
             "Enemies" : [
                 {
                     "type": "roaming",
@@ -169,13 +170,13 @@
             "Walls": [
                 {
                     "obstacleName": "wall",
-                    "startPos": [0, 100],
+                    "startPos": [50, 100],
                     "wallType": "twoLong"
                 },
 
                 {
                     "obstacleName": "wall",
-                    "startPos": [50, 100],
+                    "startPos": [100, 200],
                     "wallType": "twoLong"
                 },
                 {

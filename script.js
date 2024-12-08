@@ -252,10 +252,11 @@ function startRoamer(){
         let roamingLeft = roamers[i].left
         let roamRoute = roamers[i].path
         console.log(roamRoute);
+
         //* variable for storing place in route
         let count = 0;
             let roamMove = setInterval(() => {
-                console.log(count);
+                // console.log(count);
                 //* Determine if you are going Left/Right
                 if (roamRoute[count] == "Right"){
                     roamingLeft = roamingLeft + 50
@@ -263,13 +264,13 @@ function startRoamer(){
                 else if (roamRoute[count] == "Left"){
                     roamingLeft = roamingLeft - 50
                 }      
-                console.log(roamingLeft)    
+                // console.log(roamingLeft)    
                 gsap.to(`#${enemyList[i].name}`, {left:roamingLeft, duration: .4 });
                 // console.log("roam move")
 
                 if(heroAlive == true && heroHiding == false){
                     if(enemyList[i].top == heroTop && roamingLeft == heroLeft || heroAlive == false){
-                        console.log("The bird got you!");
+                        console.log("The fish got you!");
                         clearInterval(roamMove);
                         //* Declare hero dead
                         heroDie();
@@ -281,6 +282,7 @@ function startRoamer(){
                 if(count == roamRoute.length){
                     count = 0;
                 }
+                return roamMove;
             }, 400);
         }
         // if(enemyList[i].top == heroTop && enemyList[i].left == heroLeft){
@@ -676,6 +678,7 @@ function disableControls(){
     heroAlive = true;
 }
 function spawnStuff(){
+    
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
     let outWallSpawnr = new OutWallSpawn("stats.json", document.querySelector("#playSpace"));
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
