@@ -249,13 +249,13 @@ function startRoamer(){
     console.log(roamers);
 
     for(let i = 0; i < roamers.length; i++){
-            let roamingLeft = roamers[i].left
-            let roamRoute = roamers[i].path
-            console.log(roamRoute);
-            //* variable for storing place in route
-            let count = 0;
-            let roamMove = setInterval((count) => {
-                
+        let roamingLeft = roamers[i].left
+        let roamRoute = roamers[i].path
+        console.log(roamRoute);
+        //* variable for storing place in route
+        let count = 0;
+            let roamMove = setInterval(() => {
+                console.log(count);
                 //* Determine if you are going Left/Right
                 if (roamRoute[count] == "Right"){
                     roamingLeft = roamingLeft + 50
