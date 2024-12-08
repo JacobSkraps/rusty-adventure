@@ -96,6 +96,13 @@ main{
     background-color: red;
     z-index: 3;
 }
+.roaming{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: purple;
+    z-index: 3;
+}
 .bow{
     width: 50px;
     height: 50px;

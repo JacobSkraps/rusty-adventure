@@ -243,6 +243,51 @@ function hide(){
     }
 };
 
+function startRoamer(){
+    console.log("roamers");
+    let roamers = enemyList.filter(enemy => enemy.type == "roaming")
+    console.log(roamers);
+
+    for(let i = 0; i < roamers.length; i++){
+            let roamingLeft = roamers[i].left
+            let roamRoute = roamers[i].path
+            console.log(roamRoute);
+            //* variable for storing place in route
+            let count = 0;
+            let roamMove = setInterval((count) => {
+                
+                //* Determine if you are going Left/Right
+                if (roamRoute[count] == "Right"){
+                    roamingLeft = roamingLeft + 50
+                }
+                else if (roamRoute[count] == "Left"){
+                    roamingLeft = roamingLeft - 50
+                }      
+                console.log(roamingLeft)    
+                gsap.to(`#${enemyList[i].name}`, {left:roamingLeft, duration: .4 });
+                // console.log("roam move")
+
+                if(heroAlive == true && heroHiding == false){
+                    if(enemyList[i].top == heroTop && roamingLeft == heroLeft || heroAlive == false){
+                        console.log("The bird got you!");
+                        clearInterval(roamMove);
+                        //* Declare hero dead
+                        heroDie();
+                        heroAlive = false
+                    }
+                }
+
+                count = count++;
+                if(count == roamRoute.length){
+                    count = 0;
+                }
+            }, 400);
+        }
+        // if(enemyList[i].top == heroTop && enemyList[i].left == heroLeft){
+        //     console.log("The bird got you!");
+        // }
+}
+
 function heroDie(){
     console.log("Hero is dead!");
 
@@ -474,6 +519,27 @@ class enemySpawn{
                     }
                     enemyList.push(snakeExample);
                 }
+                else if(enemyShortcut[i].type=="roaming"){
+                    beLife.classList.add("roaming");
+
+                    let roamingTop = enemyShortcut[i].startPos[0];
+                    let roamingLeft = enemyShortcut[i].startPos[1];
+                    let roamingPath = enemyShortcut[i].route;
+
+                    //* Storing values outside of loop
+
+                    console.log(`roaming y: ${roamingTop} x: ${roamingLeft}`)
+                    gsap.to(beLife, {top: roamingTop, left:roamingLeft, duration:0});
+
+                    let roamingExample = {
+                        name: name,
+                        type: "roaming",
+                        top: roamingTop,
+                        left: roamingLeft,
+                        path: roamingPath
+                    }
+                    enemyList.push(roamingExample);
+                }
                 
                 spawnArea.appendChild(beLife);
             };
@@ -616,6 +682,9 @@ function spawnStuff(){
     let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
     let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
     let endSpawnr = new endAdd("stats.json", document.querySelector("#playSpace"));
+    setTimeout(startRoamer, 100);
+    
+
 }
 function startRound(){
     heroAlive = false;

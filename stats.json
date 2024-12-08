@@ -27,7 +27,7 @@
     },
 
     "levelInformation" : {
-        "levelOne" : {
+        "levelTwo" : {
             "Enemies" : [
                 {
                     "type": "bird",
@@ -150,6 +150,102 @@
                     "collectableType": "bow",
                     "collected": false,
                     "startPos": [100, 150]
+                }
+            ],
+            "End":
+                {
+                "startPos": [0, 100],
+                "endPos": [100, 450]
+                }
+        },
+        "levelOne" : {
+            "Enemies" : [
+                {
+                    "type": "roaming",
+                    "startPos": [250, 350],
+                    "route": ["Left", "Left", "Left", "Left", "Left", "Right", "Right", "Right", "Right", "Right"]
+                }
+            ],
+            "Walls": [
+                {
+                    "obstacleName": "wall",
+                    "startPos": [0, 100],
+                    "wallType": "twoLong"
+                },
+
+                {
+                    "obstacleName": "wall",
+                    "startPos": [50, 100],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 250],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 150],
+                    "wallType": "twoLong"
+                },                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 300],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 400],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 100],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 200],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 300],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 400],
+                    "wallType": "oneLong"
+                }
+            ],
+            "OutWalls": [
+                {
+                    "face": "Right",
+                    "startPos": [0, 0],
+                    "endPos": [500, 100]
+                },
+                {
+                    "face": "Up",
+                    "startPos": [450, 100],
+                    "endPos": [500, 450]
+                },
+                {
+                    "face": "Left",
+                    "startPos": [0, 450],
+                    "endPos": [500, 550]
+                }
+            ],
+            "Interactables": [
+                {
+                    "type": "shell",
+                    "startPos": [250, 200]
+                }
+            ],
+            "bonus": [
+                {
+                    "collectableType": "purse",
+                    "collected": false,
+                    "startPos": [100, 50]
                 }
             ],
             "End":
