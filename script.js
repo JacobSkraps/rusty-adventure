@@ -277,7 +277,7 @@ function startRoamer(){
                     }
                 }
 
-                count = count++;
+                count++;
                 if(count == roamRoute.length){
                     count = 0;
                 }

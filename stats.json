@@ -162,8 +162,8 @@
             "Enemies" : [
                 {
                     "type": "roaming",
-                    "startPos": [250, 350],
-                    "route": ["Left", "Left", "Left", "Left", "Left", "Right", "Right", "Right", "Right", "Right"]
+                    "startPos": [250, 400],
+                    "route": ["Left", "Left", "Left", "Left", "Left", "Left", "Right", "Right", "Right", "Right", "Right", "Right"]
                 }
             ],
             "Walls": [
@@ -214,7 +214,7 @@
                 },
                 {
                     "obstacleName": "wall",
-                    "startPos": [300, 400],
+                    "startPos": [300, 350],
                     "wallType": "oneLong"
                 }
             ],
