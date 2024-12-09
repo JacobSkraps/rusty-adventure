@@ -631,7 +631,8 @@ class spawningStuff{
                 let beLife = document.createElement("div");
                 beLife.classList.add("endZone");
                 beLife.classList.add("removeable");
-    
+
+                let endColour = endShortcut.colour;
             
                 let endStartTop = endShortcut.startPos[0];
                 let endStartLeft = endShortcut.startPos[1];
@@ -641,7 +642,7 @@ class spawningStuff{
                 let endWidth = endEndLeft - endStartLeft
     
                 console.log(`end start y: ${endStartTop} x: ${endStartLeft} end  y: ${endEndTop} x: ${endEndLeft}, width: ${endWidth} height: ${endHeight}`)
-                gsap.to(beLife, {top: endStartTop, left:endStartLeft, duration:0, width: endWidth, height: endHeight});
+                gsap.to(beLife, {top: endStartTop, left:endStartLeft, duration:0, width: endWidth, height: endHeight, backgroundColor:`#${endColour}`}, );
     
                 endLocation = {
                     startY: endStartTop,
