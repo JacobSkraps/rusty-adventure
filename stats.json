@@ -27,7 +27,7 @@
     },
 
     "levelInformation" : {
-        "levelTwo" : {
+        "levelOne" : {
             "Enemies" : [
                 {
                     "type": "bird",
@@ -158,7 +158,7 @@
                 "endPos": [100, 450]
                 }
         },
-        "levelThree" : {
+        "levelTwo" : {
             "colour": "425495",
             "Enemies" : [
                 {
@@ -255,7 +255,7 @@
                 "endPos": [100, 450]
                 }
         },
-        "levelOne" : {
+        "levelThree" : {
             "colour": "24346e",
             "Enemies" : [
                 {
@@ -383,9 +383,9 @@
             ],
             "bonus": [
                 {
-                    "collectableType": "purse",
+                    "collectableType": "bangles",
                     "collected": false,
-                    "startPos": [100, 50]
+                    "startPos": [300, 400]
                 }
             ],
             "End":

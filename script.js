@@ -189,7 +189,7 @@ function moveDir(motionDir){
                 if(noBite == false){
                     console.log("Snakebite");
                     let snakeExtend = newLeft - enemyList[i].left + 50
-                    gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, duration:0.5, ease: "circ.out"});
+                    gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, height:50, duration:0.5, ease: "circ.out"});
                     heroDie();
                     heroAlive = false
                 }
@@ -588,6 +588,7 @@ class collectableAdd{
                 beLife.id = name
                 let bonusType = bonusShortcut[i].collectableType
                 beLife.classList.add(bonusType);
+                beLife.classList.add("collectable");
                 beLife.classList.add("removeable");
             
                 let bonusTop = bonusShortcut[i].startPos[0];
