@@ -33,6 +33,8 @@ shellList = [];
 
 endLocation = {};
 
+currentLevel = 0;
+
 
 //* Wall/snake location storers
 
@@ -337,26 +339,30 @@ function heroDie(){
 
 function heroWin(){
     console.log("Hero got to the goal!");
+    if(currentLevel <= 2){
+        currentLevel++;
+        let header = "Nice Job!";
+        let myPhrase = "Do it again.";
+        let pageBody = document.querySelector("#playSpace");
+        let myPara = document.createElement("p");
+        let myPara2 = document.createElement("p");
 
-    let header = "Nice Job!";
-    let myPhrase = "Do it again.";
-    let pageBody = document.querySelector("#playSpace");
-    let myPara = document.createElement("p");
-    let myPara2 = document.createElement("p");
+        myPara2.innerText = header;
+        myPara.innerText = myPhrase;
+        pageBody.appendChild(myPara2);
+        pageBody.appendChild(myPara);
+        myPara2.classList.add("winText");
+        myPara.classList.add("winText");
+        myPara.classList.add("Text");
+        myPara2.classList.add("Text");
 
-    myPara2.innerText = header;
-    myPara.innerText = myPhrase;
-    pageBody.appendChild(myPara2);
-    pageBody.appendChild(myPara);
-    myPara2.classList.add("winText");
-    myPara.classList.add("winText");
-    myPara.classList.add("Text");
-    myPara2.classList.add("Text");
-
-    gsap.fromTo(".winText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
-    gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
-    setTimeout(startRound, 2500);
-
+        gsap.fromTo(".winText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
+        gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
+        setTimeout(startRound, 2500);
+    }
+    else{
+        console.log("Game complete!");
+    }
 };
 
 class WallSpawn{
@@ -585,8 +591,8 @@ class collectableAdd{
             for (let i = 0; i < bonusShortcut.length; i++){
                 let beLife = document.createElement("div");
                 let name = `collectable${[i]}`
-                beLife.id = name
-                let bonusType = bonusShortcut[i].collectableType
+                beLife.id = name;
+                let bonusType = bonusShortcut[i].collectableType;
                 beLife.classList.add(bonusType);
                 beLife.classList.add("collectable");
                 beLife.classList.add("removeable");

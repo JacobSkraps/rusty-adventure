@@ -28,6 +28,7 @@
 
     "levelInformation" : {
         "levelOne" : {
+            "colour": "E9CEA1",
             "Enemies" : [
                 {
                     "type": "bird",

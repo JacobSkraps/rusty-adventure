@@ -23,7 +23,7 @@ main{
     position: relative;
 }
 #playSpace{
-    background-color:rgb(233, 206, 161);
+    background-color:#E9CEA1;
     width: 550px;
     height: 500px;
     border: 1px solid black;
