@@ -242,13 +242,15 @@ function moveDir(motionDir){
 }
 
 function hide(){
-    if(heroHiding == false){
-        gsap.to(hero, {scale: 0.25, opacity:0, duration: 1, ease:"power1.in"});
-        heroHiding = true;
-    }
-    else if(heroHiding == true){
-        gsap.to(hero, {scale: 1, opacity:1, duration: 1, ease:"power1.in"});
-        heroHiding = false;
+    if(heroAlive == true){
+        if(heroHiding == false){
+            gsap.to(hero, {scale: 0.25, opacity:0, duration: 0.4, ease:"power1.in"});
+            heroHiding = true;
+        }
+        else if(heroHiding == true){
+            gsap.to(hero, {scale: 1, opacity:1, duration: 0.4, ease:"power1.out"});
+            heroHiding = false;
+        }
     }
 };
 
@@ -365,12 +367,15 @@ function heroWin(){
     }
 };
 
-class spawnStuff{
+class spawningStuff{
     constructor(dataSource, spawnArea){
         fetch(dataSource, spawnArea)
         .then(response => response.json())
         .then(stats => {
             let shortCut = stats.levelInformation;
+            let colourShortCut = shortCut[currentLevel].colour
+            gsap.to(`#playSpace`, {backgroundColor: `#${colourShortCut}`});
+
             //* Create Walls
             (function(shortCut){
                 let wallShortcut = shortCut[currentLevel].Walls
@@ -660,7 +665,7 @@ function resetPos(){
     heroLeft = 200;
     heroHiding = false;
     heroAlive = true;
-    gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0 });
+    gsap.to(hero, {top: heroTop, left:heroLeft, duration: 0, opacity:1, scale:1});
 }
 function disableControls(){
     //* I am lazy, this is here so that I can use setTimeout
@@ -668,7 +673,7 @@ function disableControls(){
     heroAlive = true;
 }
 function spawnStuff(){
-    let spawnr = new spawnStuff("stats.json", document.querySelector("#playSpace"));
+    let spawnr = new spawningStuff("stats.json", document.querySelector("#playSpace"));
     setTimeout(startRoamer, 100);
     
 
