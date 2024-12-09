@@ -365,7 +365,7 @@ function heroWin(){
     }
 };
 
-class WallSpawn{
+class spawnStuff{
     constructor(dataSource, spawnArea){
         fetch(dataSource, spawnArea)
         .then(response => response.json())
@@ -668,7 +668,7 @@ function disableControls(){
     heroAlive = true;
 }
 function spawnStuff(){
-    let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
+    let spawnr = new spawnStuff("stats.json", document.querySelector("#playSpace"));
     setTimeout(startRoamer, 100);
     
 
