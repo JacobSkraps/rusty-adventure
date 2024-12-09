@@ -23,6 +23,8 @@ heroMovable = true;
 wallList = [];
 outWallList = [];
 
+intervalList = [];
+
 enemyList = [];
 
 bonusList = [];
@@ -145,6 +147,9 @@ function moveDir(motionDir){
 
                     //*Interval for bird moving
                     let birdMove = setInterval(() => {
+                        if (heroAlive == false){
+                            clearInterval(birdMove);
+                        }
                         birdLeft = birdLeft+50
                         gsap.to(`#${enemyList[i].name}`, {left:birdLeft, duration: .4 });
                         console.log("bird move")
@@ -254,27 +259,33 @@ function startRoamer(){
         let roamingLeft = roamers[i].left
         let roamingTop = roamers[i].top
         let roamRoute = roamers[i].path
+        let enemyTarget = enemyList[i].name
         console.log(roamRoute);
-
         //* variable for storing place in route
         let count = 0;
             let roamMove = setInterval(() => {
-                // console.log(count);
+                if (heroAlive == false){
+                    clearInterval(roamMove);
+                }
                 //* Determine if you are going Left/Right
                 if (roamRoute[count] == "Right"){
                     roamingLeft = roamingLeft + 50
+                    reflect = -1
                 }
                 else if (roamRoute[count] == "Left"){
                     roamingLeft = roamingLeft - 50
+                    reflect = 1
                 }
                 else if (roamRoute[count] == "Up"){
                     roamingTop = roamingTop - 50
+                    reflect = -1
                 }      
                 else if (roamRoute[count] == "Down"){
                     roamingTop = roamingTop + 50
+                    reflect = 1
                 }            
                 // console.log(roamingLeft)    
-                gsap.to(`#${enemyList[i].name}`, {left:roamingLeft, top: roamingTop, duration: .4 });
+                gsap.to(`#${enemyTarget}`, {left:roamingLeft, top: roamingTop, duration: .4, scaleX: reflect });
                 // console.log("roam move")
 
                 if(heroAlive == true && heroHiding == false){
@@ -292,9 +303,12 @@ function startRoamer(){
                     count = 0;
                 }
             }, 400);
+            let roamExample = {
+                name: roamers[i].name,
+                interval: roamMove
+            }
+            intervalList.push(roamExample);
         }
-        // return roamMove;
-
 }
 
 function heroDie(){
@@ -685,7 +699,6 @@ function disableControls(){
     heroAlive = true;
 }
 function spawnStuff(){
-    // clearInterval(roamMove)
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
     let outWallSpawnr = new OutWallSpawn("stats.json", document.querySelector("#playSpace"));
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
@@ -721,7 +734,7 @@ function startRound(){
 
     setTimeout(resetPos, 300);
     setTimeout(spawnStuff, 300);
-    setTimeout(disableControls, 300);
+    setTimeout(disableControls, 400);
 };
 startRound();
 
