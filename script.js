@@ -339,7 +339,7 @@ function heroDie(){
 
 function heroWin(){
     console.log("Hero got to the goal!");
-    if(currentLevel <= 2){
+    if(currentLevel <= 1){
         currentLevel++;
         let header = "Nice Job!";
         let myPhrase = "Do it again.";
@@ -370,9 +370,10 @@ class WallSpawn{
         fetch(dataSource, spawnArea)
         .then(response => response.json())
         .then(stats => {
-            let shortCut = stats.levelInformation
-            function wallCreate(shortCut){
-                shortCut[currentLevel].Walls
+            let shortCut = stats.levelInformation;
+            //* Create Walls
+            (function(shortCut){
+                let wallShortcut = shortCut[currentLevel].Walls
                 console.log(wallShortcut);
                 for (let i = 0; i < wallShortcut.length; i++){
                     let beLife = document.createElement("div");
@@ -434,8 +435,9 @@ class WallSpawn{
                     
                     spawnArea.appendChild(beLife);
                 };
-            }(shortCut);
-            function outWallCreate(shortCut){
+            })(shortCut);
+            //* Create Boundaries
+            (function(shortCut){
                 let outWallShortcut = shortCut[currentLevel].OutWalls
 
                 console.log(outWallShortcut);
@@ -477,8 +479,9 @@ class WallSpawn{
                     
                     spawnArea.appendChild(beLife);
                 };
-            }(shortCut);
-            function enemyCreate(shortCut){
+            })(shortCut);
+            //* Create Enemies
+            (function (shortCut){
                 let enemyShortcut = shortCut[currentLevel].Enemies
                 console.log(enemyShortcut);
                     for (let i = 0; i < enemyShortcut.length; i++){
@@ -554,8 +557,9 @@ class WallSpawn{
                         
                         spawnArea.appendChild(beLife);
                     };
-            }(shortCut);
-            function bonusCreate(shortCut){
+            })(shortCut);
+            //* Create Bonus
+            (function (shortCut){
                 let bonusShortcut = shortCut[currentLevel].bonus
 
                 console.log(bonusShortcut);
@@ -584,8 +588,9 @@ class WallSpawn{
                     
                     spawnArea.appendChild(beLife);
                 };
-            }(shortCut);
-            function interactCreate(shortCut){
+            })(shortCut);
+            //* Create Shells
+            (function (shortCut){
                 let interactShortcut = shortCut[currentLevel].Interactables
                 console.log(interactShortcut);
                 for (let i = 0; i < interactShortcut.length; i++){
@@ -613,8 +618,9 @@ class WallSpawn{
                     
                     spawnArea.appendChild(beLife);
                 };
-            }(shortCut);
-            function outWallCreate(shortCut){
+            })(shortCut);
+            //*Create End Zone
+            (function (shortCut){
                 let endShortcut = shortCut[currentLevel].End
                 console.log(endShortcut);
                 let beLife = document.createElement("div");
@@ -639,265 +645,13 @@ class WallSpawn{
                     endX: endEndLeft,
                 }            
                 spawnArea.appendChild(beLife);
-            }(shortCut);
+            })(shortCut);
         })
 
         .catch(err =>console.log(err));
     }
 }
 
-class OutWallSpawn{
-    constructor(dataSource, spawnArea){
-        fetch(dataSource, spawnArea)
-        .then(response => response.json())
-        .then(stats => {
-            let outWallShortcut = stats.levelInformation.levelOne.OutWalls
-
-            console.log(outWallShortcut);
-            for (let i = 0; i < outWallShortcut.length; i++){
-                let beLife = document.createElement("div");
-                let name = `wall${[i]}`
-                beLife.id = name
-                beLife.classList.add("outWall");
-                beLife.classList.add("removeable");
-
-
-                if(outWallShortcut[i].face=="Right"){
-                    beLife.classList.add("OutWallLeft");
-                }
-                else if(outWallShortcut[i].face=="Left"){
-                    beLife.classList.add("OutWallRight");
-                }
-                else{
-                    beLife.classList.add("OutWallTop");
-                }
-
-                let wallStartTop = outWallShortcut[i].startPos[0];
-                let wallStartLeft = outWallShortcut[i].startPos[1];
-                let wallEndTop = outWallShortcut[i].endPos[0];
-                let wallEndLeft = outWallShortcut[i].endPos[1];
-                let wallHeight = wallEndTop - wallStartTop
-                let wallWidth = wallEndLeft - wallStartLeft
-    
-                console.log(`end start y: ${wallStartTop} x: ${wallStartLeft} end  y: ${wallEndTop} x: ${wallEndLeft}, width: ${wallWidth} height: ${wallHeight}`)
-                gsap.to(beLife, {top: wallStartTop, left:wallStartLeft, duration:0, width: wallWidth, height: wallHeight});
-    
-                let outWallExample = {
-                    startY: wallStartTop,
-                    startX: wallStartLeft,
-                    endY: wallEndTop,
-                    endX: wallEndLeft,
-                }
-                outWallList.push(outWallExample);
-                
-                spawnArea.appendChild(beLife);
-            };
-
-        })
-        
-        .catch(err =>console.log(err));
-    }
-}
-
-class enemySpawn{
-    constructor(dataSource, spawnArea){
-        fetch(dataSource, spawnArea)
-        .then(response => response.json())
-        .then(stats => {
-            let enemyShortcut = stats.levelInformation.levelOne.Enemies
-
-            console.log(enemyShortcut);
-            for (let i = 0; i < enemyShortcut.length; i++){
-                let beLife = document.createElement("div");
-                let name = `enemy${[i]}`
-                beLife.id = name
-                beLife.classList.add("enemy");
-                beLife.classList.add("removeable");
-
-                if(enemyShortcut[i].type=="bird"){
-                    beLife.classList.add("bird");
-
-                    let birdTop = enemyShortcut[i].startPos[0];
-                    let birdLeft = enemyShortcut[i].startPos[1];
-                    let birdVision = enemyShortcut[i].viewDistance;
-
-                    console.log(`bird y: ${birdTop} x: ${birdLeft}`)
-                    gsap.to(beLife, {top: birdTop, left:birdLeft, duration:0});
-
-                    //* Storing values outside of loop
-                    let birdExample = {
-                        name: name,
-                        type: "bird",
-                        top: birdTop,
-                        left: birdLeft,
-                        viewDistance: birdVision,
-                        hunting: false
-                    }
-                    enemyList.push(birdExample);
-                } 
-                else if(enemyShortcut[i].type=="snake"){
-                    beLife.classList.add("snake");
-
-                    let snakeTop = enemyShortcut[i].startPos[0];
-                    let snakeLeft = enemyShortcut[i].startPos[1];
-                    let snakeVision = enemyShortcut[i].viewDistance;
-
-                    //* Storing values outside of loop
-
-                    console.log(`snake y: ${snakeTop} x: ${snakeLeft}`)
-                    gsap.to(beLife, {top: snakeTop, left:snakeLeft, duration:0});
-
-                    let snakeExample = {
-                        name: name,
-                        type: "snake",
-                        top: snakeTop,
-                        left: snakeLeft,
-                        viewDistance: snakeVision
-                    }
-                    enemyList.push(snakeExample);
-                }
-                else if(enemyShortcut[i].type=="roaming"){
-                    beLife.classList.add("roaming");
-
-                    let roamingTop = enemyShortcut[i].startPos[0];
-                    let roamingLeft = enemyShortcut[i].startPos[1];
-                    let roamingPath = enemyShortcut[i].route;
-
-                    //* Storing values outside of loop
-
-                    console.log(`roaming y: ${roamingTop} x: ${roamingLeft}`)
-                    gsap.to(beLife, {top: roamingTop, left:roamingLeft, duration:0});
-
-                    let roamingExample = {
-                        name: name,
-                        type: "roaming",
-                        top: roamingTop,
-                        left: roamingLeft,
-                        path: roamingPath
-                    }
-                    enemyList.push(roamingExample);
-                }
-                
-                spawnArea.appendChild(beLife);
-            };
-
-        })
-        .catch(err =>console.log(err));
-    }
-}
-
-// let snakeOner = new enemySpawn("stats.json", document.querySelector("#playSpace"));
-
-
-class collectableAdd{
-    constructor(dataSource, spawnArea){
-        fetch(dataSource, spawnArea)
-        .then(response => response.json())
-        .then(stats => {
-            let bonusShortcut = stats.levelInformation.levelOne.bonus
-            console.log(bonusShortcut);
-            for (let i = 0; i < bonusShortcut.length; i++){
-                let beLife = document.createElement("div");
-                let name = `collectable${[i]}`
-                beLife.id = name;
-                let bonusType = bonusShortcut[i].collectableType;
-                beLife.classList.add(bonusType);
-                beLife.classList.add("collectable");
-                beLife.classList.add("removeable");
-            
-                let bonusTop = bonusShortcut[i].startPos[0];
-                let bonusLeft = bonusShortcut[i].startPos[1];
-
-                console.log(`bonus y: ${bonusTop} x: ${bonusLeft}`)
-                gsap.to(beLife, {top: bonusTop, left:bonusLeft, duration:0});
-
-                let bonusExample = {
-                    name: name,
-                    type: bonusType,
-                    top: bonusTop,
-                    left: bonusLeft,
-                }
-                bonusList.push(bonusExample);
-                
-                spawnArea.appendChild(beLife);
-            };
-        })
-        .catch(err =>console.log(err));
-    }
-}
-
-// let bowr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
-
-class interactableAdd{
-    constructor(dataSource, spawnArea){
-        fetch(dataSource, spawnArea)
-        .then(response => response.json())
-        .then(stats => {
-            let interactShortcut = stats.levelInformation.levelOne.Interactables
-            console.log(interactShortcut);
-            for (let i = 0; i < interactShortcut.length; i++){
-                let beLife = document.createElement("div");
-                let name = `shell${[i]}`
-                beLife.id = name
-                let interactType = interactShortcut[i].type
-                beLife.classList.add(interactType);
-                beLife.classList.add("removeable");
-
-            
-                let shellTop = interactShortcut[i].startPos[0];
-                let shellLeft = interactShortcut[i].startPos[1];
-
-                console.log(`shell y: ${shellTop} x: ${shellLeft}`)
-                gsap.to(beLife, {top: shellTop, left:shellLeft, duration:0});
-
-                let shellExample = {
-                    name: name,
-                    type: interactType,
-                    top: shellTop,
-                    left: shellLeft,
-                }
-                shellList.push(shellExample);
-                
-                spawnArea.appendChild(beLife);
-            };
-        })
-        .catch(err =>console.log(err));
-    }
-}
-
-class endAdd{
-    constructor(dataSource, spawnArea){
-        fetch(dataSource, spawnArea)
-        .then(response => response.json())
-        .then(stats => {
-            let endShortcut = stats.levelInformation.levelOne.End
-            console.log(endShortcut);
-            let beLife = document.createElement("div");
-            beLife.classList.add("endZone");
-            beLife.classList.add("removeable");
-
-        
-            let endStartTop = endShortcut.startPos[0];
-            let endStartLeft = endShortcut.startPos[1];
-            let endEndTop = endShortcut.endPos[0];
-            let endEndLeft = endShortcut.endPos[1];
-            let endHeight = endEndTop - endStartTop
-            let endWidth = endEndLeft - endStartLeft
-
-            console.log(`end start y: ${endStartTop} x: ${endStartLeft} end  y: ${endEndTop} x: ${endEndLeft}, width: ${endWidth} height: ${endHeight}`)
-            gsap.to(beLife, {top: endStartTop, left:endStartLeft, duration:0, width: endWidth, height: endHeight});
-
-            endLocation = {
-                startY: endStartTop,
-                startX: endStartLeft,
-                endY: endEndTop,
-                endX: endEndLeft,
-            }            
-            spawnArea.appendChild(beLife);
-        })
-        .catch(err =>console.log(err));
-    }
-}
 
 // let shellr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
 function resetPos(){
@@ -915,11 +669,6 @@ function disableControls(){
 }
 function spawnStuff(){
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
-    let outWallSpawnr = new OutWallSpawn("stats.json", document.querySelector("#playSpace"));
-    let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
-    let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
-    let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
-    let endSpawnr = new endAdd("stats.json", document.querySelector("#playSpace"));
     setTimeout(startRoamer, 100);
     
 
