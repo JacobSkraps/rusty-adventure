@@ -346,13 +346,7 @@ function heroWin(){
     console.log("Hero got to the goal!");
     if(currentLevel <= 1){
         currentLevel++;
-        let newBody = document.querySelector("#playSpace");
-        let winDiv = document.createElement("div");
-        newBody.appendChild(winDiv);
-        winDiv.classList.add("bigDiv");
-        winDiv.classList.add("winDiv");
-
-        let pageBody = document.querySelector(".winDiv");
+        let pageBody = document.querySelector("#winScreen");
 
         let header = "You beat the level!";
         let myPara = document.createElement("h1");
@@ -377,9 +371,13 @@ function heroWin(){
                 (gsap.to(".winText2", {opacity:1, y: 0, duration: 0.5, ease: "bounce"})
             ) , 1000);
         }
+        gsap.to("#winScreen", {opacity:1})
         gsap.fromTo(".winText1", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 0.5, ease: "bounce"});
         // gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
         setTimeout(startRound, 5000);
+        setTimeout(() =>
+            (gsap.to("#winScreen", {opacity:0})
+        ) , 5200);
     }
     else{
         console.log("Game complete!");
