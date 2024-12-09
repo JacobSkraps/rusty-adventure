@@ -380,7 +380,61 @@ function heroWin(){
         ) , 5200);
     }
     else{
+        let pageBody = document.querySelector("#winScreen");
+
+        let header = "You saved your wife!";
+        let myPara = document.createElement("h1");
+        pageBody.appendChild(myPara);
+        myPara.innerText = header;
+
+        myPara.classList.add("winText1");
+        myPara.classList.add("winText");
+        myPara.classList.add("Text");
+
         console.log("Game complete!");
+        gsap.to("#winScreen", {opacity:1})
+        gsap.fromTo(".winText1", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 0.5, ease: "bounce"});
+        if(collectedBonuses.length == 0){
+            let myPhrase = "And found none of her stuff!";
+            let myPara2 = document.createElement("h3");
+            pageBody.appendChild(myPara2);
+            myPara2.innerText = myPhrase;
+            
+            myPara2.classList.add("winText2");
+            myPara2.classList.add("winText");
+            gsap.to(".winText2", {opacity:0, y:-800});
+            myPara2.classList.add("Text");
+            setTimeout(() =>
+                (gsap.to(".winText2", {opacity:1, y: 0, duration: 0.5, ease: "bounce"})
+            ) , 1000);
+        } else if(collectedBonuses.length > 0 && collectedBonuses.length < 3){
+            let myPhrase = `And found ${collectedBonuses.length} of her things!`;
+            let myPara2 = document.createElement("h3");
+            pageBody.appendChild(myPara2);
+            myPara2.innerText = myPhrase;
+            
+            myPara2.classList.add("winText2");
+            myPara2.classList.add("winText");
+            gsap.to(".winText2", {opacity:0, y:-800});
+            myPara2.classList.add("Text");
+            setTimeout(() =>
+                (gsap.to(".winText2", {opacity:1, y: 0, duration: 0.5, ease: "bounce"})
+            ) , 1000);
+        } else if(collectedBonuses.length == 3){
+            let myPhrase = `And found ALL of her things!`;
+            let myPara2 = document.createElement("h3");
+            pageBody.appendChild(myPara2);
+            myPara2.innerText = myPhrase;
+            
+            myPara2.classList.add("winText2");
+            myPara2.classList.add("winText");
+            gsap.to(".winText2", {opacity:0, y:-800});
+            myPara2.classList.add("Text");
+            setTimeout(() =>
+                (gsap.to(".winText2", {opacity:1, y: 0, duration: 0.5, ease: "bounce"})
+            ) , 1000);
+        }
+        
     }
 };
 
