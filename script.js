@@ -100,9 +100,11 @@ function moveDir(motionDir){
                     }
                 } 
                 for(let j = 0; j < enemyList.length; j++){
-                    if (newRockLeft == enemyList[j].left && newRockTop == enemyList[j].top){
-                        console.log("Rock hits enemy");
-                        return;
+                    if (enemyList[j].type !== "roaming"){
+                        if (newRockLeft == enemyList[j].left && newRockTop == enemyList[j].top){
+                            console.log("Rock hits enemy");
+                            return;
+                        }
                     }
                 }
                 console.log("rock push");
@@ -250,6 +252,7 @@ function startRoamer(){
 
     for(let i = 0; i < roamers.length; i++){
         let roamingLeft = roamers[i].left
+        let roamingTop = roamers[i].top
         let roamRoute = roamers[i].path
         console.log(roamRoute);
 
@@ -263,13 +266,19 @@ function startRoamer(){
                 }
                 else if (roamRoute[count] == "Left"){
                     roamingLeft = roamingLeft - 50
+                }
+                else if (roamRoute[count] == "Up"){
+                    roamingTop = roamingTop - 50
                 }      
+                else if (roamRoute[count] == "Down"){
+                    roamingTop = roamingTop + 50
+                }            
                 // console.log(roamingLeft)    
-                gsap.to(`#${enemyList[i].name}`, {left:roamingLeft, duration: .4 });
+                gsap.to(`#${enemyList[i].name}`, {left:roamingLeft, top: roamingTop, duration: .4 });
                 // console.log("roam move")
 
                 if(heroAlive == true && heroHiding == false){
-                    if(enemyList[i].top == heroTop && roamingLeft == heroLeft || heroAlive == false){
+                    if(roamingTop == heroTop && roamingLeft == heroLeft || heroAlive == false){
                         console.log("The fish got you!");
                         clearInterval(roamMove);
                         //* Declare hero dead
@@ -282,12 +291,10 @@ function startRoamer(){
                 if(count == roamRoute.length){
                     count = 0;
                 }
-                return roamMove;
             }, 400);
         }
-        // if(enemyList[i].top == heroTop && enemyList[i].left == heroLeft){
-        //     console.log("The bird got you!");
-        // }
+        // return roamMove;
+
 }
 
 function heroDie(){
@@ -678,7 +685,7 @@ function disableControls(){
     heroAlive = true;
 }
 function spawnStuff(){
-    
+    // clearInterval(roamMove)
     let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
     let outWallSpawnr = new OutWallSpawn("stats.json", document.querySelector("#playSpace"));
     let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));

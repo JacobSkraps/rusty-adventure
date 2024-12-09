@@ -158,7 +158,7 @@
                 "endPos": [100, 450]
                 }
         },
-        "levelOne" : {
+        "levelThree" : {
             "colour": "425495",
             "Enemies" : [
                 {
@@ -240,6 +240,145 @@
                 {
                     "type": "shell",
                     "startPos": [250, 200]
+                }
+            ],
+            "bonus": [
+                {
+                    "collectableType": "purse",
+                    "collected": false,
+                    "startPos": [100, 50]
+                }
+            ],
+            "End":
+                {
+                "startPos": [0, 100],
+                "endPos": [100, 450]
+                }
+        },
+        "levelOne" : {
+            "colour": "24346e",
+            "Enemies" : [
+                {
+                    "type": "roaming",
+                    "startPos": [300, 300],
+                    "route": ["Left", "Left", "Left", "Up", "Up", "Up", "Right", "Right", "Right", "Right", "Down", "Down", "Down", "Left"]
+                },
+                {
+                    "type": "roaming",
+                    "startPos": [150, 200],
+                    "route": ["Right", "Right", "Right", "Down", "Down", "Down", "Left", "Left", "Left", "Left", "Up", "Up", "Up", "Right"]
+                },
+                {
+                    "type": "snake",
+                    "startPos": [100, 300],
+                    "viewDistance": 150
+                }
+            ],
+            "Walls": [
+                {
+                    "obstacleName": "wall",
+                    "startPos": [100, 100],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [250, 400],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [250, 100],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [300, 100],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [100, 200],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 200],
+                    "wallType": "twoLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 150],
+                    "wallType": "rock"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 100],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 250],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 200],
+                    "wallType": "oneLong"
+                },                {
+                    "obstacleName": "wall",
+                    "startPos": [200, 300],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [250, 250],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [250, 200],
+                    "wallType": "oneLong"
+                },                
+                {
+                    "obstacleName": "wall",
+                    "startPos": [250, 300],
+                    "wallType": "oneLong"
+                },
+                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 300],
+                    "wallType": "twoLong"
+                },                {
+                    "obstacleName": "wall",
+                    "startPos": [350, 400],
+                    "wallType": "oneLong"
+                }
+            ],
+            "OutWalls": [
+                {
+                    "face": "Right",
+                    "startPos": [0, 0],
+                    "endPos": [500, 100]
+                },
+                {
+                    "face": "Up",
+                    "startPos": [450, 100],
+                    "endPos": [500, 450]
+                },
+                {
+                    "face": "Left",
+                    "startPos": [0, 450],
+                    "endPos": [500, 550]
+                }
+            ],
+            "Interactables": [
+                {
+                    "type": "shell",
+                    "startPos": [150, 250]
+                },
+                {
+                    "type": "shell",
+                    "startPos": [300, 250]
                 }
             ],
             "bonus": [

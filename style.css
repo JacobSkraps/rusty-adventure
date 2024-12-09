@@ -144,7 +144,7 @@ main{
 
 .deadText{
     position: relative;
-    color: black;
+    color: white;
     font-size: 72px;
     padding: 30px;
     z-index: 10000;
@@ -157,6 +157,7 @@ main{
     font-size: 72px;
     padding: 30px;
     z-index: 10000;
+    text-align: center;
     /* filter: brightness(110%); */
 }
 
