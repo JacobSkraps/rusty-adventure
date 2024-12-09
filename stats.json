@@ -26,8 +26,8 @@
         }
     },
 
-    "levelInformation" : {
-        "levelOne" : {
+    "levelInformation" : [
+        {
             "colour": "E9CEA1",
             "Enemies" : [
                 {
@@ -159,7 +159,7 @@
                 "endPos": [100, 450]
                 }
         },
-        "levelTwo" : {
+        {
             "colour": "425495",
             "Enemies" : [
                 {
@@ -256,7 +256,7 @@
                 "endPos": [100, 450]
                 }
         },
-        "levelThree" : {
+        {
             "colour": "24346e",
             "Enemies" : [
                 {
@@ -395,5 +395,5 @@
                 "endPos": [100, 450]
                 }
         }
-    }
+    ]
 }

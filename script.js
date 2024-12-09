@@ -370,71 +370,278 @@ class WallSpawn{
         fetch(dataSource, spawnArea)
         .then(response => response.json())
         .then(stats => {
-            let wallShortcut = stats.levelInformation.levelOne.Walls
+            let shortCut = stats.levelInformation
+            function wallCreate(shortCut){
+                shortCut[currentLevel].Walls
+                console.log(wallShortcut);
+                for (let i = 0; i < wallShortcut.length; i++){
+                    let beLife = document.createElement("div");
+                    let name = `wall${[i]}`
+                    beLife.id = name
+                    beLife.classList.add("wall");
+                    beLife.classList.add("removeable");
+    
+    
+                    if(wallShortcut[i].wallType=="rock"){
+                        beLife.classList.add("rock");
+                        let rockTop = wallShortcut[i].startPos[0];
+                        let rockLeft = wallShortcut[i].startPos[1];
+                        console.log(`rock y: ${rockTop} x: ${rockLeft}`)
+                        gsap.to(beLife, {top: rockTop, left:rockLeft, duration:0});
+                        let rockExample = {
+                            name: name,
+                            type: "rock",
+                            top: rockTop,
+                            left: rockLeft
+                        }
+                        wallList.push(rockExample);
+                    }
+                    else if(wallShortcut[i].wallType=="oneLong"){
+                        beLife.classList.add("oneLong");
+                        let wallTop = wallShortcut[i].startPos[0];
+                        let wallLeft = wallShortcut[i].startPos[1];
+                        console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
+                        gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
+                        let wallExample = {
+                            name: name,
+                            type: "wall",
+                            top: wallTop,
+                            left: wallLeft,
+                        }
+                        wallList.push(wallExample);
+                    }
+                    else{
+                        beLife.classList.add("twoLong");
+                        let wallTop = wallShortcut[i].startPos[0];
+                        let wallLeft = wallShortcut[i].startPos[1];
+                        console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
+                        gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
+                        let wallExample = {
+                            name: name,
+                            type: "wall",
+                            top: wallTop,
+                            left: wallLeft
+                        }
+                        let wallExampleEx = {
+                            name: name,
+                            type: "wall",
+                            top: wallTop,
+                            left: wallLeft+50
+                        }
+                        wallList.push(wallExample);
+                        wallList.push(wallExampleEx);
+                    }
+                    
+                    spawnArea.appendChild(beLife);
+                };
+            }(shortCut);
+            function outWallCreate(shortCut){
+                let outWallShortcut = shortCut[currentLevel].OutWalls
 
-            console.log(wallShortcut);
-            for (let i = 0; i < wallShortcut.length; i++){
-                let beLife = document.createElement("div");
-                let name = `wall${[i]}`
-                beLife.id = name
-                beLife.classList.add("wall");
-                beLife.classList.add("removeable");
+                console.log(outWallShortcut);
+                for (let i = 0; i < outWallShortcut.length; i++){
+                    let beLife = document.createElement("div");
+                    let name = `wall${[i]}`
+                    beLife.id = name
+                    beLife.classList.add("outWall");
+                    beLife.classList.add("removeable");
+    
+    
+                    if(outWallShortcut[i].face=="Right"){
+                        beLife.classList.add("OutWallLeft");
+                    }
+                    else if(outWallShortcut[i].face=="Left"){
+                        beLife.classList.add("OutWallRight");
+                    }
+                    else{
+                        beLife.classList.add("OutWallTop");
+                    }
+    
+                    let wallStartTop = outWallShortcut[i].startPos[0];
+                    let wallStartLeft = outWallShortcut[i].startPos[1];
+                    let wallEndTop = outWallShortcut[i].endPos[0];
+                    let wallEndLeft = outWallShortcut[i].endPos[1];
+                    let wallHeight = wallEndTop - wallStartTop
+                    let wallWidth = wallEndLeft - wallStartLeft
+        
+                    console.log(`end start y: ${wallStartTop} x: ${wallStartLeft} end  y: ${wallEndTop} x: ${wallEndLeft}, width: ${wallWidth} height: ${wallHeight}`)
+                    gsap.to(beLife, {top: wallStartTop, left:wallStartLeft, duration:0, width: wallWidth, height: wallHeight});
+        
+                    let outWallExample = {
+                        startY: wallStartTop,
+                        startX: wallStartLeft,
+                        endY: wallEndTop,
+                        endX: wallEndLeft,
+                    }
+                    outWallList.push(outWallExample);
+                    
+                    spawnArea.appendChild(beLife);
+                };
+            }(shortCut);
+            function enemyCreate(shortCut){
+                let enemyShortcut = shortCut[currentLevel].Enemies
+                console.log(enemyShortcut);
+                    for (let i = 0; i < enemyShortcut.length; i++){
+                        let beLife = document.createElement("div");
+                        let name = `enemy${[i]}`
+                        beLife.id = name
+                        beLife.classList.add("enemy");
+                        beLife.classList.add("removeable");
+        
+                        if(enemyShortcut[i].type=="bird"){
+                            beLife.classList.add("bird");
+        
+                            let birdTop = enemyShortcut[i].startPos[0];
+                            let birdLeft = enemyShortcut[i].startPos[1];
+                            let birdVision = enemyShortcut[i].viewDistance;
+        
+                            console.log(`bird y: ${birdTop} x: ${birdLeft}`)
+                            gsap.to(beLife, {top: birdTop, left:birdLeft, duration:0});
+        
+                            //* Storing values outside of loop
+                            let birdExample = {
+                                name: name,
+                                type: "bird",
+                                top: birdTop,
+                                left: birdLeft,
+                                viewDistance: birdVision,
+                                hunting: false
+                            }
+                            enemyList.push(birdExample);
+                        } 
+                        else if(enemyShortcut[i].type=="snake"){
+                            beLife.classList.add("snake");
+        
+                            let snakeTop = enemyShortcut[i].startPos[0];
+                            let snakeLeft = enemyShortcut[i].startPos[1];
+                            let snakeVision = enemyShortcut[i].viewDistance;
+        
+                            //* Storing values outside of loop
+        
+                            console.log(`snake y: ${snakeTop} x: ${snakeLeft}`)
+                            gsap.to(beLife, {top: snakeTop, left:snakeLeft, duration:0});
+        
+                            let snakeExample = {
+                                name: name,
+                                type: "snake",
+                                top: snakeTop,
+                                left: snakeLeft,
+                                viewDistance: snakeVision
+                            }
+                            enemyList.push(snakeExample);
+                        }
+                        else if(enemyShortcut[i].type=="roaming"){
+                            beLife.classList.add("roaming");
+        
+                            let roamingTop = enemyShortcut[i].startPos[0];
+                            let roamingLeft = enemyShortcut[i].startPos[1];
+                            let roamingPath = enemyShortcut[i].route;
+        
+                            //* Storing values outside of loop
+        
+                            console.log(`roaming y: ${roamingTop} x: ${roamingLeft}`)
+                            gsap.to(beLife, {top: roamingTop, left:roamingLeft, duration:0});
+        
+                            let roamingExample = {
+                                name: name,
+                                type: "roaming",
+                                top: roamingTop,
+                                left: roamingLeft,
+                                path: roamingPath
+                            }
+                            enemyList.push(roamingExample);
+                        }
+                        
+                        spawnArea.appendChild(beLife);
+                    };
+            }(shortCut);
+            function bonusCreate(shortCut){
+                let bonusShortcut = shortCut[currentLevel].bonus
 
-
-                if(wallShortcut[i].wallType=="rock"){
-                    beLife.classList.add("rock");
-                    let rockTop = wallShortcut[i].startPos[0];
-                    let rockLeft = wallShortcut[i].startPos[1];
-                    console.log(`rock y: ${rockTop} x: ${rockLeft}`)
-                    gsap.to(beLife, {top: rockTop, left:rockLeft, duration:0});
-                    let rockExample = {
-                        name: name,
-                        type: "rock",
-                        top: rockTop,
-                        left: rockLeft
-                    }
-                    wallList.push(rockExample);
-                }
-                else if(wallShortcut[i].wallType=="oneLong"){
-                    beLife.classList.add("oneLong");
-                    let wallTop = wallShortcut[i].startPos[0];
-                    let wallLeft = wallShortcut[i].startPos[1];
-                    console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
-                    gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
-                    let wallExample = {
-                        name: name,
-                        type: "wall",
-                        top: wallTop,
-                        left: wallLeft,
-                    }
-                    wallList.push(wallExample);
-                }
-                else{
-                    beLife.classList.add("twoLong");
-                    let wallTop = wallShortcut[i].startPos[0];
-                    let wallLeft = wallShortcut[i].startPos[1];
-                    console.log(`Wall y: ${wallTop} x: ${wallLeft}`)
-                    gsap.to(beLife, {top: wallTop, left:wallLeft, duration:0});
-                    let wallExample = {
-                        name: name,
-                        type: "wall",
-                        top: wallTop,
-                        left: wallLeft
-                    }
-                    let wallExampleEx = {
-                        name: name,
-                        type: "wall",
-                        top: wallTop,
-                        left: wallLeft+50
-                    }
-                    wallList.push(wallExample);
-                    wallList.push(wallExampleEx);
-                }
+                console.log(bonusShortcut);
+                for (let i = 0; i < bonusShortcut.length; i++){
+                    let beLife = document.createElement("div");
+                    let name = `collectable${[i]}`
+                    beLife.id = name;
+                    let bonusType = bonusShortcut[i].collectableType;
+                    beLife.classList.add(bonusType);
+                    beLife.classList.add("collectable");
+                    beLife.classList.add("removeable");
                 
+                    let bonusTop = bonusShortcut[i].startPos[0];
+                    let bonusLeft = bonusShortcut[i].startPos[1];
+    
+                    console.log(`bonus y: ${bonusTop} x: ${bonusLeft}`)
+                    gsap.to(beLife, {top: bonusTop, left:bonusLeft, duration:0});
+    
+                    let bonusExample = {
+                        name: name,
+                        type: bonusType,
+                        top: bonusTop,
+                        left: bonusLeft,
+                    }
+                    bonusList.push(bonusExample);
+                    
+                    spawnArea.appendChild(beLife);
+                };
+            }(shortCut);
+            function interactCreate(shortCut){
+                let interactShortcut = shortCut[currentLevel].Interactables
+                console.log(interactShortcut);
+                for (let i = 0; i < interactShortcut.length; i++){
+                    let beLife = document.createElement("div");
+                    let name = `shell${[i]}`
+                    beLife.id = name
+                    let interactType = interactShortcut[i].type
+                    beLife.classList.add(interactType);
+                    beLife.classList.add("removeable");
+    
+                
+                    let shellTop = interactShortcut[i].startPos[0];
+                    let shellLeft = interactShortcut[i].startPos[1];
+    
+                    console.log(`shell y: ${shellTop} x: ${shellLeft}`)
+                    gsap.to(beLife, {top: shellTop, left:shellLeft, duration:0});
+    
+                    let shellExample = {
+                        name: name,
+                        type: interactType,
+                        top: shellTop,
+                        left: shellLeft,
+                    }
+                    shellList.push(shellExample);
+                    
+                    spawnArea.appendChild(beLife);
+                };
+            }(shortCut);
+            function outWallCreate(shortCut){
+                let endShortcut = shortCut[currentLevel].End
+                console.log(endShortcut);
+                let beLife = document.createElement("div");
+                beLife.classList.add("endZone");
+                beLife.classList.add("removeable");
+    
+            
+                let endStartTop = endShortcut.startPos[0];
+                let endStartLeft = endShortcut.startPos[1];
+                let endEndTop = endShortcut.endPos[0];
+                let endEndLeft = endShortcut.endPos[1];
+                let endHeight = endEndTop - endStartTop
+                let endWidth = endEndLeft - endStartLeft
+    
+                console.log(`end start y: ${endStartTop} x: ${endStartLeft} end  y: ${endEndTop} x: ${endEndLeft}, width: ${endWidth} height: ${endHeight}`)
+                gsap.to(beLife, {top: endStartTop, left:endStartLeft, duration:0, width: endWidth, height: endHeight});
+    
+                endLocation = {
+                    startY: endStartTop,
+                    startX: endStartLeft,
+                    endY: endEndTop,
+                    endX: endEndLeft,
+                }            
                 spawnArea.appendChild(beLife);
-            };
-
+            }(shortCut);
         })
+
         .catch(err =>console.log(err));
     }
 }
@@ -487,6 +694,7 @@ class OutWallSpawn{
             };
 
         })
+        
         .catch(err =>console.log(err));
     }
 }
