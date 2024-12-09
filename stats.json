@@ -241,14 +241,14 @@
             "Interactables": [
                 {
                     "type": "shell",
-                    "startPos": [250, 200]
+                    "startPos": [250, 250]
                 }
             ],
             "bonus": [
                 {
                     "collectableType": "purse",
                     "collected": false,
-                    "startPos": [100, 50]
+                    "startPos": [100, 150]
                 }
             ],
             "End":

@@ -28,6 +28,7 @@ intervalList = [];
 enemyList = [];
 
 bonusList = [];
+collectedBonuses = [];
 
 shellList = [];
 
@@ -201,6 +202,8 @@ function moveDir(motionDir){
         for(let i = 0; i < bonusList.length; i++){
             if (newLeft == bonusList[i].left & newTop == bonusList[i].top){
             console.log(`I found a ${bonusList[i].type}!`);
+            bonusList[i].collected = true;
+            collectedBonuses.push(bonusList[i]);
             gsap.to(`#${bonusList[i].name}`, {opacity: 0, duration:0.5, ease: "circ.out"});
         }
     }
@@ -343,24 +346,40 @@ function heroWin(){
     console.log("Hero got to the goal!");
     if(currentLevel <= 1){
         currentLevel++;
-        let header = "Nice Job!";
-        let myPhrase = "Do it again.";
-        let pageBody = document.querySelector("#playSpace");
-        let myPara = document.createElement("p");
-        let myPara2 = document.createElement("p");
+        let newBody = document.querySelector("#playSpace");
+        let winDiv = document.createElement("div");
+        newBody.appendChild(winDiv);
+        winDiv.classList.add("bigDiv");
+        winDiv.classList.add("winDiv");
 
-        myPara2.innerText = header;
-        myPara.innerText = myPhrase;
-        pageBody.appendChild(myPara2);
+        let pageBody = document.querySelector(".winDiv");
+
+        let header = "You beat the level!";
+        let myPara = document.createElement("h1");
         pageBody.appendChild(myPara);
-        myPara2.classList.add("winText");
+        myPara.innerText = header;
+
+        myPara.classList.add("winText1");
         myPara.classList.add("winText");
         myPara.classList.add("Text");
-        myPara2.classList.add("Text");
 
-        gsap.fromTo(".winText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
-        gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
-        setTimeout(startRound, 2500);
+        if(bonusList[0].collected == true){
+            let myPhrase = "And got a bonus too!";
+            let myPara2 = document.createElement("h3");
+            pageBody.appendChild(myPara2);
+            myPara2.innerText = myPhrase;
+            
+            myPara2.classList.add("winText2");
+            myPara2.classList.add("winText");
+            gsap.to(".winText2", {opacity:0, y:-800});
+            myPara2.classList.add("Text");
+            setTimeout(() =>
+                (gsap.to(".winText2", {opacity:1, y: 0, duration: 0.5, ease: "bounce"})
+            ) , 1000);
+        }
+        gsap.fromTo(".winText1", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 0.5, ease: "bounce"});
+        // gsap.to("#playSpace", {css:{ 'filter': 'brightness(90%)'}, duration: 1, ease:"bounce"});
+        setTimeout(startRound, 5000);
     }
     else{
         console.log("Game complete!");
@@ -588,6 +607,7 @@ class spawningStuff{
                         type: bonusType,
                         top: bonusTop,
                         left: bonusLeft,
+                        collected: false
                     }
                     bonusList.push(bonusExample);
                     
@@ -700,6 +720,8 @@ function startRound(){
     };
     removeElementsByClass('removeable');
     removeElementsByClass('Text');
+    removeElementsByClass('bigDiv');
+
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(0%)'}, duration: 1, ease:"bounce"});
 
     setTimeout(resetPos, 300);
