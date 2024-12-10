@@ -19,7 +19,7 @@ header>h1{
 }
 main{
     width: 100vw;
-    height: 90vh;
+    height: 80vh;
     position: relative;
 }
 #screen{
@@ -258,6 +258,9 @@ main{
     height: 50px;
     position: absolute;
     background-color: grey;
+    background-image: url("rockwall.png");
+    background-size: contain;
+    image-rendering: pixelated;
 }
 .bigDiv{
     width: 100%;
