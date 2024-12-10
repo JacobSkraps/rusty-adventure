@@ -168,7 +168,7 @@ function moveDir(motionDir){
                             if(enemyList[i].top == heroTop && birdLeft == heroLeft || heroAlive == false){
                                 console.log("The bird got you!");
                                 clearInterval(birdMove);
-                                    heroDie();
+                                    heroDie("bird");
                                     heroAlive = false
                                 }
                             }
@@ -201,7 +201,7 @@ function moveDir(motionDir){
                     console.log("Snakebite");
                     let snakeExtend = newLeft - enemyList[i].left + 50
                     gsap.to(`#${enemyList[i].name}`, {width: snakeExtend, height:50, duration:0.5, ease: "circ.out"});
-                    heroDie();
+                    heroDie("snake");
                     heroAlive = false
                 }
             } 
@@ -308,7 +308,7 @@ function startRoamer(){
                         console.log("The fish got you!");
                         clearInterval(roamMove);
                         //* Declare hero dead
-                        heroDie();
+                        heroDie("fish");
                         heroAlive = false
                     }
                 }
@@ -326,27 +326,41 @@ function startRoamer(){
         }
 }
 
-function heroDie(){
+function heroDie(enemy){
     console.log("Hero is dead!");
 
-    let header = "Oh no,";
-    let myPhrase = "Rusty died!";
+    let header = "Oh no!";
+    let tip = "";
+    if(enemy == "bird"){
+        console.log("bird");
+        tip = "Seagulls can be easily tricked. Try tricking them into running at you.";
+    } else if (enemy == "snake"){
+        console.log("snake");
+        tip = "Snakes can't see past rocks. Try putting a rock between you and the snake.";
+    } else if (enemy == "fish"){
+        console.log("fish");
+        tip = "Fish don't have good eyesight. Try waiting for them to pass before you move.";
+    };
     let pageBody = document.querySelector("#playSpace");
-    let myPara = document.createElement("p");
+    let myPara = document.createElement("h1");
     let myPara2 = document.createElement("p");
 
-    myPara2.innerText = header;
-    myPara.innerText = myPhrase;
-    pageBody.appendChild(myPara2);
+    myPara.innerText = header;
+    myPara2.innerText = tip;
     pageBody.appendChild(myPara);
-    myPara2.classList.add("deadText");
+    pageBody.appendChild(myPara2);
     myPara.classList.add("deadText");
+    myPara2.classList.add("deadText");
+
+    myPara.classList.add("deadText1");
+    myPara2.classList.add("deadText2");
+
     myPara.classList.add("Text");
     myPara2.classList.add("Text");
 
-    gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 0, duration: 1, ease: "bounce"});
+    gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 100, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
-    setTimeout(startRound, 2500);
+    setTimeout(startRound, 50500);
 
 };
 
