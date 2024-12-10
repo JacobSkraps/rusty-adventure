@@ -780,9 +780,9 @@ function startRound(){
     setTimeout(spawnStuff, 300);
     setTimeout(disableControls, 400);
 };
-startRound();
-
-// let wallSpawnr = new WallSpawn("stats.json", document.querySelector("#playSpace"));
-// let enemySpawnr = new enemySpawn("stats.json", document.querySelector("#playSpace"));
-// let collectableSpawnr = new collectableAdd("stats.json", document.querySelector("#playSpace"));
-// let shellSpawnr = new interactableAdd("stats.json", document.querySelector("#playSpace"));
+function startGame(){
+    gsap.to("#startScreen", {opacity:0, duration: 1, ease:"none"});
+    startRound();
+};
+const startButton = document.querySelector("#startGameButton");
+startButton.addEventListener("click", startGame);
