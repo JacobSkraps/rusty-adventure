@@ -104,6 +104,14 @@ function moveDir(motionDir){
                         return;
                     }
                 } 
+                for(let j = 0; j < outWallList.length; j++){
+                    if (newRockTop >= outWallList[j].startY && newRockTop < outWallList[j].endY){
+                        if(newRockLeft >= outWallList[j].startX && newRockLeft < outWallList[j].endX){
+                            console.log("Rock hit outer wall");
+                            return;
+                        }
+                    }
+                }
                 for(let j = 0; j < enemyList.length; j++){
                     if (enemyList[j].type !== "roaming"){
                         if (newRockLeft == enemyList[j].left && newRockTop == enemyList[j].top){
