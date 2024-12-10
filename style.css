@@ -57,11 +57,14 @@ main{
     justify-content: space-around;
     align-content: center;
     margin: auto;
+    /* background-color: goldenrod; */
 }
-#buttons:hover{
+.startingButton:hover{
+    background-color: rgb(197, 148, 24);
     cursor: pointer;
 }
 .startingButton{
+    background-color: goldenrod;
     width: 40%;
     border: black solid 8px;
     padding: 8px;
@@ -69,6 +72,76 @@ main{
     margin: auto;
     text-align: center;
 ;}
+
+#instructionScreen{
+    width: 550px;
+    height: 500px;
+    background-color: paleturquoise;
+    /* position: relative; */
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+    padding: 1px;
+}
+#InstructionsHeader{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#InstructionsHeader h1{
+    text-align: center;
+    margin: auto;
+    font-size: 3rem;
+}
+#exitInstructions{
+    width: 25%;
+    border: black solid 8px;
+    padding: 8px;
+    border-radius: 4px;
+    margin: auto;
+    text-align: center;
+    background-color: rgb(150, 221, 221);
+}
+#exitInstructions :hover{
+    background-color: rgb(125, 202, 202);
+    cursor: pointer;
+}
+#instructionHolder{
+    width: 550px;
+    height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    /* align-content: center; */
+    margin: auto;
+    flex-wrap: wrap;
+}
+.instruction{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px;
+    margin: auto;
+    background-color: palegoldenrod;
+    border: 4px black solid;
+    width: 40%;
+    text-align: center;
+}
+.spriteContainer{
+    flex-direction: row;
+}
+.instructionSprite{
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+
 #playSpace{
     background-color:#E9CEA1;
     width: 550px;

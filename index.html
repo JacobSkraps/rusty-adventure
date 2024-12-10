@@ -30,11 +30,50 @@
     <main>
         <section id="screen">
             <div id="winScreen"></div>
+            <div id="instructionScreen">
+                <div id="InstructionsHeader">
+                    <h1>Instructions</h1>
+                    <div id="exitInstructions">
+                        <h3>Go back</h3>
+                    </div>
+                </div>
+                <div id="instructionHolder">
+                    <div class="instruction">
+                        <h3>Controls</h3>
+                        <p>Use your arrow keys to move Rusty</p>
+                        <img src="./Crab.png" alt="Rusty" class="instructionSprite">
+                    </div>
+                    <div class="instruction">
+                        <h3>Enemies</h3>
+                        <p>Avoid contact with enemies. Just a single touch can end you.</p>
+                        <div class="spriteContainer">
+                            <img src="./bird.png" alt="bird" class="instructionSprite">
+                            <img src="./snake.png" alt="snake" class="instructionSprite">
+                            <img src="./fish.png" alt="fish" class="instructionSprite">
+                        </div>
+                    </div>
+                    <div class="instruction">
+                        <h3>Treasure</h3>
+                        <p>Looks like your wife lost some of her things. Make sure to grab them!</p>
+                        <div class="spriteContainer">
+                            <img src="./bow.png" alt="bow" class="instructionSprite">
+                            <img src="./purse.png" alt="purse" class="instructionSprite">
+                            <img src="./bangles.png" alt="bangles" class="instructionSprite">
+                        </div>
+                    </div>
+                    <div class="instruction">
+                        <h3>Get deeper to save your wife</h3>
+                        <p>Your wife is somewhere deep in the water. Get down there to save her.</p>
+                        <img src="./wife.png" alt="wife" class="instructionSprite">
+                    </div>
+                </div>
+            </div>
             <div id="startScreen">
                 <h1>Rusty's Adventure</h1>
                 <div id="buttons">
                     <div class="startingButton" id="startGameButton">
                         <h2>Start Game</h2>
+                        
                     </div>
                     <div class="startingButton" id="instructionsButton">
                         <h2>Instructions</h2>
@@ -45,12 +84,12 @@
                 <div id="hero"></div>
             </section>
         </section>
-        <section id="instructions" class="mallanna-regular">
+        <!-- <section id="instructions" class="mallanna-regular">
             <p>Use your arrow keys to move the main character</p>
             <p>Use R to Restart</p>
             <p>Use E to Hide</p>
 
-        </section>
+        </section> -->
     </main>
     <audio id="moveSound" src="step.mp3"></audio>
     <audio id="bonk" src="slap.mp3"></audio>

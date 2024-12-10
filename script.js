@@ -782,7 +782,33 @@ function startRound(){
 };
 function startGame(){
     gsap.to("#startScreen", {opacity:0, duration: 1, ease:"none"});
+    startButton.removeEventListener("click", startGame);
+    instructionsButton.removeEventListener("click", showInstructions);
+    exitButton.removeEventListener("click", unShowInstructions);
+
+
+
     startRound();
 };
+function showInstructions(){
+    console.log("showing instructions");
+    gsap.to("#winScreen", {opacity:0, duration: 0.5, ease:"none", scale:0});
+    gsap.to("#startScreen", {opacity:0, duration: 0.5, ease:"none", scale:0});
+    gsap.to("#instructionScreen", {opacity:1, duration: 0, ease:"none"});
+
+}
+function unShowInstructions(){
+    console.log("showing start screen");
+    gsap.to("#winScreen", {opacity:0, duration: 0.5, ease:"none", scale:1});
+    gsap.to("#startScreen", {opacity:1, duration: 0.5, ease:"none", scale:1});
+    gsap.to("#instructionScreen", {opacity:0, delay:0.5, duration: 0, ease:"none"});
+}
+
 const startButton = document.querySelector("#startGameButton");
 startButton.addEventListener("click", startGame);
+
+const instructionsButton = document.querySelector("#instructionsButton");
+instructionsButton.addEventListener("click", showInstructions);
+
+const exitButton = document.querySelector("#exitInstructions");
+exitButton.addEventListener("click", unShowInstructions);
