@@ -4,6 +4,10 @@ let speed = 50;
 //* reference for audio
 let footsteps = document.querySelector("#moveSound");
 let bonkers = document.querySelector("#bonk");
+let squawk = document.querySelector("#squawk");
+let swoosh = document.querySelector("#swoosh");
+let grind = document.querySelector("#grind");
+
 
 //* reference the bounds of the play area;
 let playSpace = document.querySelector("#playSpace");
@@ -123,6 +127,8 @@ function moveDir(motionDir){
                 console.log("rock push");
                 console.log(`Rock is at ${newRockTop} and ${newRockLeft}`)
                 gsap.to(`#${wallList[i].name}`, {top: newRockTop, left:newRockLeft, duration:0.5, ease: "circ.out"});
+                grind.currentTime = 0;
+                grind.play();
                 console.log(`I am at ${heroTop} and ${heroLeft}`)
                 wallList[i].left = newRockLeft;
                 wallList[i].top = newRockTop;
@@ -155,7 +161,8 @@ function moveDir(motionDir){
 
                     enemyList[i].hunting = true
                     let birdLeft = enemyList[i].left
-
+                    squawk.currentTime = 0;
+                    squawk.play();
                     //*Interval for bird moving
                     let birdMove = setInterval(() => {
                         if (heroAlive == false){
@@ -177,6 +184,8 @@ function moveDir(motionDir){
                                 console.log("bird hit wall");
                                 clearInterval(birdMove);
                                 gsap.to(`#${enemyList[i].name}`, {left:birdLeft+200, duration: .8 , delay: .6, opacity:0, ease: "power1.in"});
+                                squawk.currentTime = 0;
+                                squawk.play();
                             }
                         }
                     }, 400);
@@ -301,6 +310,7 @@ function startRoamer(){
                 }            
                 // console.log(roamingLeft)    
                 gsap.to(`#${enemyTarget}`, {left:roamingLeft, top: roamingTop, duration: .4, scaleX: reflect });
+
                 // console.log("roam move")
 
                 if(heroAlive == true && heroHiding == false){
