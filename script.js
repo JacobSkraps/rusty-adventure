@@ -360,7 +360,7 @@ function heroDie(enemy){
 
     gsap.fromTo(".deadText", {opacity:0, y:-800}, {opacity:1, y: 100, duration: 1, ease: "bounce"});
     gsap.to("#playSpace", {css:{ 'filter': 'grayscale(100%)'}, duration: 1, ease:"bounce"});
-    setTimeout(startRound, 50500);
+    setTimeout(startRound, 5500);
 
 };
 
