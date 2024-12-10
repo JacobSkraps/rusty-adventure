@@ -44,6 +44,7 @@ main{
     justify-content: space-around;
 }
 #startScreen h1{
+    font-family: "DynaPuff", system-ui;
     font-size: 3rem;
     text-align: center;
     margin: auto;
@@ -71,6 +72,8 @@ main{
     border-radius: 4px;
     margin: auto;
     text-align: center;
+    font-family: "Mallanna", sans-serif;
+
 ;}
 
 #instructionScreen{
@@ -95,6 +98,7 @@ main{
     text-align: center;
     margin: auto;
     font-size: 3rem;
+    font-family: "Mallanna", sans-serif;
 }
 #exitInstructions{
     width: 25%;
@@ -104,6 +108,7 @@ main{
     margin: auto;
     text-align: center;
     background-color: rgb(150, 221, 221);
+    font-family: "Mallanna", sans-serif;
 }
 #exitInstructions :hover{
     background-color: rgb(125, 202, 202);
@@ -130,6 +135,8 @@ main{
     border: 4px black solid;
     width: 40%;
     text-align: center;
+    font-family: "Mallanna", sans-serif;
+
 }
 .spriteContainer{
     flex-direction: row;
@@ -281,12 +288,10 @@ main{
     position: absolute;
 }
 #winScreen h1{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 5rem;
 
 }
 #winScreen h3{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 3rem;
 }
 .deadText{
@@ -296,11 +301,13 @@ main{
     z-index: 10000;
     text-align: center;
     background-color: black;
+    font-family: "Yomogi", cursive;
 }
 .deadText1{
     font-size: 3rem;
 }
 .deadText2{
+    padding-top: 0;
     font-size: 1.5rem;
 }
 .winText{
@@ -312,6 +319,8 @@ main{
     z-index: 10000;
     text-align: center;
     /* filter: brightness(110%); */
+    font-family: "Mallanna", sans-serif;
+    line-height: 100%;
 }
 
 #instructions>p{
