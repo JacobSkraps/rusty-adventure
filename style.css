@@ -48,9 +48,21 @@ main{
     font-size: 3rem;
     text-align: center;
     margin: auto;
-
 }
-
+#startCrabs{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+.startSprite{
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    image-rendering: pixelated;
+}
 #buttons{
     width: 80%;
     display: flex;

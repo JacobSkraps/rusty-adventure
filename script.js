@@ -817,10 +817,9 @@ function startGame(){
     startButton.removeEventListener("click", startGame);
     instructionsButton.removeEventListener("click", showInstructions);
     exitButton.removeEventListener("click", unShowInstructions);
-
-
-
     startRound();
+    playMusic = setInterval(playNote, 16100);
+    playNote();
 };
 function showInstructions(){
     console.log("showing instructions");
