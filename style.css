@@ -19,28 +19,165 @@ header>h1{
 }
 main{
     width: 100vw;
-    height: 90vh;
+    height: 80vh;
     position: relative;
 }
+#screen{
+    margin: 0 auto;
+    width: 550px;
+    height: 500px;
+    position: relative;
+}
+#startScreen{
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background-size: 100% 100%;
+    background-color: palegoldenrod;
+    z-index: 10000;
+    padding: 0px 2px 2px 0px;
+    margin: 0px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+}
+#startScreen h1{
+    font-family: "DynaPuff", system-ui;
+    font-size: 3rem;
+    text-align: center;
+    margin: auto;
+}
+#startCrabs{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+.startSprite{
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    image-rendering: pixelated;
+}
+#buttons{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    margin: auto;
+    /* background-color: goldenrod; */
+}
+.startingButton:hover{
+    background-color: rgb(197, 148, 24);
+    cursor: pointer;
+}
+.startingButton{
+    background-color: goldenrod;
+    width: 40%;
+    border: black solid 8px;
+    padding: 8px;
+    border-radius: 4px;
+    margin: auto;
+    text-align: center;
+    font-family: "Mallanna", sans-serif;
+
+;}
+
+#instructionScreen{
+    width: 550px;
+    height: 500px;
+    background-color: paleturquoise;
+    /* position: relative; */
+    position: absolute;
+    opacity: 0;
+    z-index: 100;
+    padding: 1px;
+}
+#InstructionsHeader{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#InstructionsHeader h1{
+    text-align: center;
+    margin: auto;
+    font-size: 3rem;
+    font-family: "Mallanna", sans-serif;
+}
+#exitInstructions{
+    width: 25%;
+    border: black solid 8px;
+    padding: 8px;
+    border-radius: 4px;
+    margin: auto;
+    text-align: center;
+    background-color: rgb(150, 221, 221);
+    font-family: "Mallanna", sans-serif;
+}
+#exitInstructions :hover{
+    background-color: rgb(125, 202, 202);
+    cursor: pointer;
+}
+#instructionHolder{
+    width: 550px;
+    height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    /* align-content: center; */
+    margin: auto;
+    flex-wrap: wrap;
+}
+.instruction{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px;
+    margin: auto;
+    background-color: palegoldenrod;
+    border: 4px black solid;
+    width: 40%;
+    text-align: center;
+    font-family: "Mallanna", sans-serif;
+
+}
+.spriteContainer{
+    flex-direction: row;
+}
+.instructionSprite{
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+
 #playSpace{
-    background-color:aquamarine;
+    background-color:#E9CEA1;
     width: 550px;
     height: 500px;
     border: 1px solid black;
     margin: 0 auto;
     position: relative;
 }
-/* #playSpace div{
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    background-color: black;
-} */
 #hero{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: blue;
+    background-image: url("Crab.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 1;
+    
 }
 .creature{
     width: 50px;
@@ -49,30 +186,153 @@ main{
     background-color: black;
 }
 
-
+.rock{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-image: url("rock.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 2;
+}
 .oneLong{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: brown;
+    background-image: url("wall.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 2;
 }
 .twoLong{
     width: 100px;
     height: 50px;
     position: absolute;
-    background-color: rgb(124, 29, 29);
+    background-image: url("Lwall.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 2;
 }
-.snake{
-    width: 150px;
-    height: 50px;
-    position: absolute;
-    background-color: red; 
-}
-.bow{
+.bird{
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: pink; 
+    background-image: url("bird.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 3;
+}
+.snake{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-image: url("snake.png");
+    background-size: cover;
+    image-rendering: pixelated;
+    z-index: 3;
+}
+.roaming{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    /* background-color: purple; */
+    z-index: 3;
+    background-image: url("fish.png");
+    background-size: cover;
+    image-rendering: pixelated;
+}
+.collectable{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-size: cover;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 0.75rem rgb(255, 255, 255));
+}
+.bow{
+    background-image: url("bow.png");
+}
+.purse{
+    background-image: url("purse.png");
+}
+.bangles{
+    background-image: url("bangles.png");
+}
+.shell{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-image: url("shell.png");
+    background-size: cover;
+    image-rendering: pixelated;
+}
+.endZone{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    /* background-color: blue; */
+}
+.outWall{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: grey;
+    background-image: url("rockwall.png");
+    background-size: contain;
+    image-rendering: pixelated;
+    filter: brightness(150%);
+}
+.bigDiv{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+#winScreen{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-image: url(winBackground.jpg);
+    background-size: 100% 100%;
+    z-index: 10000;
+    padding: 0px 2px 2px 0px;
+    margin: 0px;
+    position: absolute;
+}
+#winScreen h1{
+    font-size: 5rem;
+
+}
+#winScreen h3{
+    font-size: 3rem;
+}
+.deadText{
+    position: relative;
+    color: white;
+    padding: 30px;
+    z-index: 10000;
+    text-align: center;
+    background-color: black;
+    font-family: "Yomogi", cursive;
+}
+.deadText1{
+    font-size: 3rem;
+}
+.deadText2{
+    padding-top: 0;
+    font-size: 1.5rem;
+}
+.winText{
+    position: relative;
+    margin: auto;
+    color: white;
+    font-size: 72px;
+    padding: 24px;
+    z-index: 10000;
+    text-align: center;
+    /* filter: brightness(110%); */
+    font-family: "Mallanna", sans-serif;
+    line-height: 100%;
 }
 
 #instructions>p{
