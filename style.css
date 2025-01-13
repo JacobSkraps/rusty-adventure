@@ -85,8 +85,7 @@ main{
     margin: auto;
     text-align: center;
     font-family: "Mallanna", sans-serif;
-
-;}
+}
 
 #instructionScreen{
     width: 550px;
@@ -146,9 +145,12 @@ main{
     background-color: palegoldenrod;
     border: 4px black solid;
     width: 40%;
+    height: 160px;
     text-align: center;
     font-family: "Mallanna", sans-serif;
-
+}
+.instruction p{
+    font-size: 0.9rem;
 }
 .spriteContainer{
     flex-direction: row;
@@ -227,8 +229,9 @@ main{
     height: 50px;
     position: absolute;
     background-image: url("snake.png");
-    background-size: cover;
+    background-size: 100% 100%;
     image-rendering: pixelated;
+    overflow: hidden;
     z-index: 3;
 }
 .roaming{
@@ -281,6 +284,7 @@ main{
     background-size: contain;
     image-rendering: pixelated;
     filter: brightness(150%);
+    overflow: hidden;
 }
 .bigDiv{
     width: 100%;

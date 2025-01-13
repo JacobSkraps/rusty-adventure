@@ -66,7 +66,9 @@ let keyPressAction = (e) => {
             break;
         case 82:            
             console.log("start restart");
-            startRound();
+            if(heroAlive == true){
+                startRound();
+            }
             break;
         case 69:
             //* Hide
@@ -115,7 +117,7 @@ function moveDir(motionDir){
                             return;
                         }
                     }
-                }
+                }             
                 for(let j = 0; j < enemyList.length; j++){
                     if (enemyList[j].type !== "roaming"){
                         if (newRockLeft == enemyList[j].left && newRockTop == enemyList[j].top){
@@ -127,6 +129,12 @@ function moveDir(motionDir){
                 console.log("rock push");
                 console.log(`Rock is at ${newRockTop} and ${newRockLeft}`)
                 gsap.to(`#${wallList[i].name}`, {top: newRockTop, left:newRockLeft, duration:0.5, ease: "circ.out"});
+                if (newRockTop >= endLocation.startY && newRockTop < endLocation.endY){
+                    if(newRockLeft >= endLocation.startX && newRockLeft < endLocation.endX){
+                        console.log("The rock sank!")
+                        gsap.to(`#${wallList[i].name}`, {opacity: 0, ease: "circ.out", delay: 0.45});
+                    }
+                }   
                 grind.currentTime = 0;
                 grind.play();
                 console.log(`I am at ${heroTop} and ${heroLeft}`)
@@ -343,13 +351,13 @@ function heroDie(enemy){
     let tip = "";
     if(enemy == "bird"){
         console.log("bird");
-        tip = "Seagulls can be easily tricked. Try tricking them into running at you.";
+        tip = "Seagulls can be easily tricked. Try tricking them into running at you and then ducking for cover.";
     } else if (enemy == "snake"){
         console.log("snake");
         tip = "Snakes can't see past rocks. Try putting a rock between you and the snake.";
     } else if (enemy == "fish"){
         console.log("fish");
-        tip = "Fish don't have good eyesight. Try waiting for them to pass before you move.";
+        tip = "Fish don't have good eyesight. Try hiding in shells and waiting for them to pass.";
     };
     let pageBody = document.querySelector("#playSpace");
     let myPara = document.createElement("h1");
@@ -551,7 +559,7 @@ class spawningStuff{
                 console.log(outWallShortcut);
                 for (let i = 0; i < outWallShortcut.length; i++){
                     let beLife = document.createElement("div");
-                    let name = `wall${[i]}`
+                    let name = `outWall${[i]}`
                     beLife.id = name
                     beLife.classList.add("outWall");
                     beLife.classList.add("removeable");

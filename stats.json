@@ -190,7 +190,8 @@
                     "obstacleName": "wall",
                     "startPos": [200, 150],
                     "wallType": "twoLong"
-                },                {
+                },                
+                {
                     "obstacleName": "wall",
                     "startPos": [200, 300],
                     "wallType": "twoLong"
